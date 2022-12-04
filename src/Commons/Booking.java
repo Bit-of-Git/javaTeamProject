@@ -7,15 +7,12 @@ public class Booking extends Flight {
 	private String bookingStatus;
 	public Booking() {}
 	
-	public Booking(int flightID, int flightNum, String flightDay, String to, String from, String leavingTime, String arriveTime, int totCapacity,
-    		int firstClassCap, int businessClassCap, int economyCap, int firstLeft, int economyLeft, int firstCost, int businessCost, int economyCost) {
-		super (flightID, flightNum,flightDay, to, from, leavingTime, arriveTime, totCapacity,
-    		firstClassCap, businessClassCap, economyCap, firstLeft, economyLeft, firstCost, businessCost, economyCost);
+	public Booking(int flightID, int flightNum, int Cost, int confirmNum) {
+		super ();
 		this.confirmNum = confirmNum;
 		this.timeBooked = new Date().getTime();
-		this.bookingStatus = "Confirmed";	
+		this.bookingStatus = "Confirmed";
 	}
-	
 	
 	//more get and set
 	public int getConfirmNum() {
@@ -39,7 +36,6 @@ public class Booking extends Flight {
 	}
 	public void setBookingStatus(String bookingStatus) {
 		this.bookingStatus = bookingStatus;
+		
 	}
-	
-	
 }

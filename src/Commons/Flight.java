@@ -9,19 +9,12 @@ public class Flight {
     private String leavingTime; 
     private String arriveTime; 
     private int totCapacity; 
-    private int firstClassCap;
-    private int businessClassCap; 
-    private int economyCap; 
-    private int firstLeft; 
-    private int businessLeft; 
-    private int economyLeft;
-    private int firstCost; 
-    private int businessCost; 
-    private int economyCost;
-    //constructors
+    private int SeatsLeft;
+    private int Cost; 
+        //constructors
     public Flight() {}
     public Flight(int flightID, int flightNum, String flightDay, String to, String from, String leavingTime, String arriveTime, int totCapacity,
-    		int firstClassCap, int businessClassCap, int economyCap, int firstLeft, int economyLeft, int firstCost, int businessCost, int economyCost) 
+    		int SeatsLeft, int Cost) 
     {
     	 this.flightID = flightID;
     	 this.flightNum = flightNum; 
@@ -31,16 +24,9 @@ public class Flight {
          this.leavingTime = leavingTime; 
          this.arriveTime = arriveTime; 
          this.totCapacity = totCapacity; 
-         this.firstClassCap = firstClassCap;
-         this.businessClassCap = businessClassCap; 
-         this.economyCap = economyCap; 
-         this.firstLeft = firstLeft; 
-         this.businessLeft = businessLeft; 
-         this.economyLeft = economyLeft;
-         this.firstCost = firstCost; 
-         this.businessCost = businessCost; 
-         this.economyCost = economyCost;
-    }
+         this.SeatsLeft = SeatsLeft;
+         this.Cost = Cost; 
+          }
     
     //get and set
     
@@ -114,79 +100,20 @@ public class Flight {
 	}
 
    
-	public int getFirstClassCap() {
-		return firstClassCap;
+	public int getSeatsLeft() {
+		return SeatsLeft;
 	}
 
-	public void setFirstClassCap(int firstClassCap) { //first
-		this.firstClassCap = firstClassCap;
+	public void setSeatsLeft(int SeatsLeft) {
+		this.SeatsLeft = SeatsLeft;
 	}
 
-	public int getBusinessClassCap() { //busca
-		return businessClassCap;
+	public int getCost() { //busca
+		return Cost;
 	}
 
-	public void setBusinessClassCap(int businessClassCap) { //buscap
-		this.businessClassCap = businessClassCap;
-	}
-
-	
-	public int getEconomyCap() { //ecocap
-		return economyCap;
-	}
-
-	public void setEconomyCap(int economyCap) { //ecocap
-		this.economyCap = economyCap;
-	}
-	
-	public int getFirstLeft() { //first
-		return firstLeft;
-	}
-
-	public void setFirstLeft(int firstLeft) { //first
-		this.firstLeft = firstLeft;
-	}
-
-	public int getBusinessLeft() { //busca
-		return businessLeft;
-	}
-
-	public void setBusinessLeft(int businessLeft) { //buscap
-		this.businessLeft = businessLeft;
-	}
-
-	
-	public int getEconomyLeft() { //ecocap
-		return economyLeft;
-	}
-
-	public void setEconomyLeft(int economyLeft) { //ecocap
-		this.economyLeft = economyLeft;
-	}
-	
-	public int getFirstCost() { //first
-		return firstCost;
-	}
-
-	public void setFirstCost(int firstCost) { //first
-		this.firstCost = firstCost;
-	}
-
-	public int getBusinessCost() { //busca
-		return businessCost;
-	}
-
-	public void setBusinessCost(int businessCost) { //buscap
-		this.businessCost = businessCost;
-	}
-
-	
-	public int getEconomyCost() { //ecocap
-		return economyCost;
-	}
-
-	public void setEconomyCost(int economyCost) { //ecocap
-		this.economyCost = economyCost;
+	public void setCost(int Cost) { 
+		this.Cost = Cost;
 	}
     
 }
