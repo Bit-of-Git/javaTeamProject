@@ -5,17 +5,15 @@ import java.util.ArrayList;
 //checks against the database for passwords & usernames and flights
 
 public class ConnectionCheck {
-	public static void main(String[] args)
-			throws SQLException, ClassNotFoundException {
-		//Load the JDBC driver
+	public static Connection getConnection() throws Exception{
+		try {
 		Class.forName("com.mysql.jdbc.Driver");
-		System.out.println("Driver loaded");
-		
-		//Connect to the database!!
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaAir", "root", "root");
-			System.out.println("Database Connected!");
-		
-		//connection.close();
-	}	
+		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/3306","root","root");
+		return connection;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

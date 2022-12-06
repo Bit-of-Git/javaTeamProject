@@ -1,6 +1,6 @@
 package Commons;
 
-public class Flight {
+public class Flight{
 	protected int flightID;
 	private int flightNum; 
     private String flightDay; 
