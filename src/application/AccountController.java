@@ -50,7 +50,6 @@ public class AccountController implements Initializable{
 	@FXML private TableColumn<Flight, String> arriveTimeColumn;
 	@FXML private TableColumn<Flight, String> leavingTimeColumn;
 	
-	@FXML private ComboBox<String> flightSelections;
 	@FXML private ComboBox<String> adminSelections;
 	
 	@FXML private TextField location;
@@ -82,18 +81,14 @@ public class AccountController implements Initializable{
 		
 		tableView.setItems(getFlights());
 		
-		// needs to display applicable flight numbers shown to what was initialized on screen
+		//We need the customer ID, check for whether admin or not
+		int customerIDFromSQL = (int) (Math.random() * 2);
+		boolean admin = false; 
 		
-		int numEntries = 10;
-		int[] lst = new int[numEntries];
-		
-		for(int i = 0; i < numEntries; i++) {
-			Integer i1 = new Integer(lst[i]);
-			flightSelections.getItems().add(i1.toString());
+		if(customerIDFromSQL == 0) {
+			admin = true;
 		}
 		
-		//check for whether admin or not
-		boolean admin = true;
 		
 		if(admin) {
 			
@@ -125,6 +120,7 @@ public class AccountController implements Initializable{
 			flights.add(new flights(flightIDVar, toVar, fromVar, arriveTimeVar, leavingTimeVar))
 		}
 		*/
+
 		
 		int flightIDVar = 1;
 		int flightNumVar = 1;
@@ -138,16 +134,163 @@ public class AccountController implements Initializable{
 		//Delete below and use for loop in tandem with sql query
 		ObservableList<Flight> flights = FXCollections.observableArrayList();
 		flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
-        Integer i1 = new Integer(flightIDVar);
-        flightSelections.getItems().add(i1.toString());
 		return flights;
 	}
 	
+	public void search(ActionEvent event) {
+		//need numm flights
+		//need all flight data. Make into matrix
+		
+		int numFlights;
+		numFlights = 10;
+		
+		
+		//get all dta entries from sql place all entries in folloing variables and usd place in observable list using below function
+		// iterate with wiht loop
+		/*
+				int flightIDVar
+				int flightNumVar
+				int capacityVar
+				double costVar
+				String dayVar
+				String toVar
+				String fromVar
+				String arriveTimeVar
+				String leavingTimeVar
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+		 */
+		
+		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		ObservableList<Flight> flights1 = FXCollections.observableArrayList();
+		boolean boo1 = false;
 
+		
+		for(int i = 0; i < numFlights; i++) {
+			if(i == 0){
+				int rand;
+				int flightIDVar = i;
+				int flightNumVar = (int)(Math.random() + 1) * 1000;
+				int capacityVar = 0;
+				double costVar = 100;
+				String dayVar = "4/25/2022";
+				String toVar = "Atlanta";
+				String fromVar = "Chicago";
+				String arriveTimeVar = "4:00 PM";
+				String leavingTimeVar = "2:00 PM";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			} else if(i<7) {
+				int rand;
+				int flightIDVar = i;
+				int flightNumVar = (int)(Math.random() + 1) * 1000;
+				int capacityVar = 15 * (int)(Math.random() + 0);
+				double costVar = 100;
+				String dayVar = "4/25/2022";
+				String toVar = "Atlanta";
+				String fromVar = "Chicago";
+				String arriveTimeVar = "4:00 PM";
+				String leavingTimeVar = "2:00 PM";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			} else {
+				int flightIDVar = i;
+				int flightNumVar = 1;
+				int capacityVar = 1;
+				double costVar = 1;
+				String dayVar = "4/25/2022";
+				String toVar = "New York";
+				String fromVar = "Boston";
+				String arriveTimeVar = "4:00 PM";
+				String leavingTimeVar = "2:00 PM";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			}
+		}
+		//loop over the selected rows
+        for (Flight flight: flights) {
+        	boolean boo = true;
+        	
+        	int flightIDVar = -1;
+        	
+        	
+	        try{
+	        	flightIDVar = Integer.parseInt(flightIDText.getText());
+	        }
+	        catch (NumberFormatException ex){
+	            ex.printStackTrace();
+	        }
+        	
+        		
+        	if(location.getText().trim().isEmpty() || destination.getText().trim().isEmpty() || flightIDSearch.getText().trim().isEmpty()) {
+        		boo1 = true;
+        	} 
+        	if(flight.getFlightID() == flightIDVar && flight.getTo() == location.getText() && destination.getText() == flight.getFrom()) {
+        		
+        	} else {
+        		boo = false;
+        	}
+        	
+        	if(boo1) {
+        		
+        	} else {
+        		if(boo) {
+        			flights1.add(flight);
+        		} else {
+        			
+        		}
+        	}
+		}
+        
+        if(boo1) {
+        	
+        } else {
+        	tableView.setItems(flights1);
+        }
+        
+	}
 	public void submit(ActionEvent event){
 		if(adminSelections.getValue().equals("Book")) {
-			
-		}
+		        ObservableList<Flight> selectedRows, allFlights;
+		        allFlights = tableView.getItems();
+		        
+		        //this gives us the rows that were selected
+		        selectedRows = tableView.getSelectionModel().getSelectedItems();
+		        
+		        //loop over the selected rows
+		        for (Flight flight: selectedRows)
+		        {
+
+		        	if(flight.getCapacity() == 0) {
+		        		try{
+		        			switchToError(event);
+		        		} catch(IOException ex) {
+		        			
+		        		}
+		        	} else if(false) {
+		        		
+		        		//get all flight ids run a loop and see if the flight ID is equal to any of those in the query may use below line
+		        		// if(!flight.getFlightID().equals(sql query))
+		        		
+		        	} else {
+		        	
+			        	System.out.println("Booking made");
+			        	//use following getters to create a row in SQL returning got values
+			        	// remember cost is a double type treat accordingly
+			        	
+			        	/*
+			        	flight.getFlightID()
+			        	flight.getFlightNum()
+			        	flight.getCapacity()
+			        	flight.getCost()
+			        	flight.getArriveTime()
+			        	flight.getTo()
+			        	flight.getFrom()
+			        	flight.getDay()
+						*/
+		        	}
+
+		        }
+		    }
+		    
+		    
+		
 		
 		if(adminSelections.getValue().equals("Add")) {
 			{
@@ -207,8 +350,7 @@ public class AccountController implements Initializable{
 		        if(leavingTimeVar !="" && arriveTimeVar !="" && toVar !="" && fromVar !="" && dayVar !="" && flightIDVar !=0 && flightNumVar !=0 && capacityVar !=0 && costVar!=0) {
 			        Flight newFlight = new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar);
 			        tableView.getItems().add(newFlight);
-			        Integer i1 = new Integer(flightIDVar);
-			        flightSelections.getItems().add(i1.toString());
+
 		        }
 
 		    }
@@ -226,30 +368,13 @@ public class AccountController implements Initializable{
 		        for (Flight flight: selectedRows)
 		        {
 		        	allFlights.remove(flight);
-		        	Integer i1 = new Integer(flight.getFlightID());
-		        	flightSelections.getItems().remove(i1.toString());
 		        }
 		    }
 		    
 		    
 		}
 	} 
-/*	
 
-	public void bookFlights(ActionEvent event){
-		
-		String bookSelection = adminSelections.getValue();
-		
-		Flight f1 = new Flight();
-		
-		ArrayList<String> arrList = new ArrayList<>();
-		
-		for(int i = 0; i < tableView.getItems().size(); i++) {
-			product = tableView.getItems().get(i);
-		}
-		
-		
-	}*/
 	
 	public void switchToSplashScreen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
@@ -281,6 +406,14 @@ public class AccountController implements Initializable{
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public void switchToError(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("Error.fxml"));
+		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 }
  
