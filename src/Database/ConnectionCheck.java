@@ -1,22 +1,16 @@
 package Database;
 import java.sql.*;
-import java.util.*;
- 
-//tries to connect to database
-
-public class ConnectionCheck {
-	public static Connection getConnection() throws Exception{
-		try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/3306","root","root");
-		return connection;
-		}catch(Exception e) {
-			System.out.print(e);
-		}
-		return null;
-	}
-	
+public class connectionv2 {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+		 String user = "pleasework@idiashroud";
+		 String pass = "GSUCIS3270!";
+		 try (Connection con = DriverManager.getConnection(conURL, user, pass);){	 
+			 //code 
+			 System.out.println("yay! I'm connected!");
+		 } catch (Exception e) {
+		  e.printStackTrace();
+		 }
+	} 
 }
-
-
-
