@@ -119,7 +119,7 @@ public class SplashScreneControler implements Initializable{
 			try{
 				switchToLogIn(event);
 			} catch(IOException ex) {
-				System.out.println("OOF");
+				ex.printStackTrace();
 			}
 			
 			//FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));	

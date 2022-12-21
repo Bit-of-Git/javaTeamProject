@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,13 +36,25 @@ import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-public class MainController {
+public class MainController implements Initializable{
 
 	//no sql is needed here
 	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	
+	private int customerID;
+	
+	
+	
+	public void initData(int customer) {
+		customerID = customer;
+	}
+	
+    public void initialize(URL url, ResourceBundle rb) {
+     
+    }    
 	
 	public void switchToSplashScreen(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
@@ -52,19 +65,32 @@ public class MainController {
 	}
 	
 	public void switchToSecurityQuestions(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("ResetPassword.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root, 312, 387);
-		stage.setScene(scene);
-		stage.show();
+		FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("ResetPassword.fxml"));
+		Parent root2 = (Parent) fxmlLoader2.load();
+		Stage stage2 = new Stage();
+		stage2.setScene(new Scene(root2)); 
+		stage2.setResizable(false);
+		stage2.initModality(Modality.APPLICATION_MODAL);
+		stage2.show();
 	}
 	
 	public void switchToAccount(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("Account.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Account.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        AccountController controller = loader.getController();
+        controller.initData(customerID);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 	
 	public void switchToBooked(ActionEvent event) throws IOException {

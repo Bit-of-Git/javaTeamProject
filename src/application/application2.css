@@ -14,7 +14,7 @@
 	}
 
 .root {
-	-fx-background-color: #3b8ab5;
+	-fx-background-color: #415e7c;
 }	
 	
 .button {
@@ -31,3 +31,13 @@
 	-fx-background-color: #24739c;
 	
 }
+.titled-pane{
+	    -fx-background-radius: 500;
+}
+.titled-pane > .title {  
+    -fx-background-color: #87afc9;
+    -fx-background-insets: 0; 
+   	-fx-background-radius: 2;
+}
+
+

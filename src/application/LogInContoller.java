@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -41,7 +42,8 @@ public class LogInContoller {
 	private Scene scene;
 	private Parent root; 
 	
-
+	private int cust;
+	
 	public TextField TextFieldUser1;
 	public TextField TextFieldPassword1;
 	
@@ -49,11 +51,22 @@ public class LogInContoller {
 
 	
 	public void switchToMainPage(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MainPage.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        MainController controller = loader.getController();
+        controller.initData(cust);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 	
 	public void switchToRegistration(ActionEvent event) throws IOException {
@@ -65,11 +78,13 @@ public class LogInContoller {
 	}
 	
 	public void switchToSecurityQuestions(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("ResetPassword.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("ResetPassword.fxml"));
+		Parent root2 = (Parent) fxmlLoader2.load();
+		Stage stage2 = new Stage();
+		stage2.setScene(new Scene(root2)); 
+		stage2.setResizable(false);
+		stage2.initModality(Modality.APPLICATION_MODAL);
+		stage2.show();
 	}
 	
 	//handles what happens with login should get string from text field checks database if correct
@@ -88,6 +103,7 @@ public class LogInContoller {
 		sqlPassword = "";
 		
 		login = false;
+		cust = 21234;
 		
 		if(user.equals(sqlUserNamer) && pass.equals(sqlPassword)) {
 			login = true;
@@ -100,11 +116,10 @@ public class LogInContoller {
 			try{
 				switchToMainPage(event);
 			} catch(IOException ex) {
-				System.out.println("OOF");
+				ex.printStackTrace();
 			}
 		} else{
-			// relaunch window close stage
-			//close program
+			switchToWrongPassword(event);
 			
 		}
 		
@@ -128,6 +143,22 @@ public class LogInContoller {
 		}
 	}
 	
+	public void switchToWrongPassword(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("WrongPassword.fxml"));
+			Parent root1 = (Parent) fxmlLoader1.load();
+			Stage stage1 = new Stage();
+			stage1.setScene(new Scene(root1)); 
+			stage1.setResizable(false);
+			stage1.initModality(Modality.APPLICATION_MODAL);
+			stage1.show();
+			
+		} catch(Exception e) {
+			System.out.println("Shux");
+		}
+
+	}
+
 	
 	
 	

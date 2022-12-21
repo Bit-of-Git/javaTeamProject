@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import java.util.ArrayList;
+import javafx.scene.control.TitledPane;
 
 
 
@@ -66,6 +68,10 @@ public class AccountController implements Initializable{
 	@FXML private TextField flightNumText;
 	@FXML private TextField capacityText;
 	@FXML private TextField costText;
+	@FXML private TitledPane title;
+	@FXML private Label labe1;
+	
+	private int customerID;
 	
 	
 	public void initialize(URL url, ResourceBundle rb) {
@@ -81,27 +87,6 @@ public class AccountController implements Initializable{
 		
 		tableView.setItems(getFlights());
 		
-		//We need the customer ID, check for whether admin or not
-		int customerIDFromSQL = (int) (Math.random() * 2);
-		boolean admin = false; 
-		
-		if(customerIDFromSQL == 0) {
-			admin = true;
-		}
-		
-		
-		if(admin) {
-			
-			String selec1 = "Book";
-			String selec2 = "Add";
-			String selec3 = "Delete";
-			
-			adminSelections.getItems().addAll(selec1, selec2, selec3);
-			
-		} else {
-			String selec1 = "Book";
-			adminSelections.getItems().addAll(selec1);
-		}
 		
 		
 	}
@@ -162,8 +147,8 @@ public class AccountController implements Initializable{
 		
 		ObservableList<Flight> flights = FXCollections.observableArrayList();
 		ObservableList<Flight> flights1 = FXCollections.observableArrayList();
-		boolean boo1 = false;
-
+		boolean locationDestinationBoolean = true;
+		boolean idSearchBoolean = true;
 		
 		for(int i = 0; i < numFlights; i++) {
 			if(i == 0){
@@ -203,48 +188,62 @@ public class AccountController implements Initializable{
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			}
 		}
-		//loop over the selected rows
-        for (Flight flight: flights) {
-        	boolean boo = true;
-        	
-        	int flightIDVar = -1;
-        	
-        	
-	        try{
-	        	flightIDVar = Integer.parseInt(flightIDText.getText());
-	        }
-	        catch (NumberFormatException ex){
-	            ex.printStackTrace();
-	        }
-        	
-        		
-        	if(location.getText().trim().isEmpty() || destination.getText().trim().isEmpty() || flightIDSearch.getText().trim().isEmpty()) {
-        		boo1 = true;
-        	} 
-        	if(flight.getFlightID() == flightIDVar && flight.getTo() == location.getText() && destination.getText() == flight.getFrom()) {
-        		
-        	} else {
-        		boo = false;
-        	}
-        	
-        	if(boo1) {
-        		
-        	} else {
-        		if(boo) {
-        			flights1.add(flight);
-        		} else {
-        			
-        		}
-        	}
-		}
-        
-        if(boo1) {
-        	
-        } else {
+		
+    	if(location.getText().isEmpty() || destination.getText().isEmpty()) {
+    		locationDestinationBoolean = false;
+    	} 
+    	if(flightIDSearch.getText().isEmpty()) {
+    		idSearchBoolean = false;
+    	}
+    	
+    	if(locationDestinationBoolean && idSearchBoolean) {
+            for (Flight flight: flights) {
+            	int flightIDVar = -1;
+            	
+    	        try{
+    	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
+    	        }
+    	        catch (NumberFormatException ex){
+    	            ex.printStackTrace();
+    	        }
+
+            	if(flight.getFlightID() == flightIDVar && flight.getTo().equals(location.getText()) && destination.getText().equals(flight.getFrom())) { 
+            		flights1.add(flight);
+            	} 
+    		}
+            
+    	} else if(locationDestinationBoolean) {
+            for (Flight flight: flights) {
+            	if(flight.getTo().equals(location.getText()) && destination.getText().equals(flight.getFrom())) { 
+            		flights1.add(flight);
+            	} 
+    		}
+    	} else if(idSearchBoolean) {
+            for (Flight flight: flights) {
+            	int flightIDVar = -1;
+          
+    	        try{
+    	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
+    	        }
+    	        catch (NumberFormatException ex){
+    	            ex.printStackTrace();
+    	        }
+
+            	if(flight.getFlightID() == flightIDVar) { 
+            		flights1.add(flight);
+            	} 
+    		}
+    	}
+		
+        if(locationDestinationBoolean || idSearchBoolean) {
         	tableView.setItems(flights1);
-        }
+        } 
+        
         
 	}
+	
+	
+	
 	public void submit(ActionEvent event){
 		if(adminSelections.getValue().equals("Book")) {
 		        ObservableList<Flight> selectedRows, allFlights;
@@ -267,10 +266,11 @@ public class AccountController implements Initializable{
 		        		
 		        		//get all flight ids run a loop and see if the flight ID is equal to any of those in the query may use below line
 		        		// if(!flight.getFlightID().equals(sql query))
+		        		switchToOverlap(event);
 		        		
 		        	} else {
 		        	
-			        	System.out.println("Booking made");
+		        		switchToFlightBooked(event);
 			        	//use following getters to create a row in SQL returning got values
 			        	// remember cost is a double type treat accordingly
 			        	
@@ -375,6 +375,54 @@ public class AccountController implements Initializable{
 		}
 	} 
 
+	public void initData(int custID) {
+		customerID = custID;
+		
+		
+		//We need the customer ID, check for whether admin or not
+
+		boolean admin = false; 		
+		if(testCustomerID(customerID) == 1) {
+			admin = true;
+		}
+		
+		if(admin) {
+			
+			String selec1 = "Book";
+			String selec2 = "Add";
+			String selec3 = "Delete";
+			
+			adminSelections.getItems().addAll(selec1, selec2, selec3);
+			
+		} else {
+			String selec1 = "Book";
+			adminSelections.getItems().addAll(selec1);
+	
+			toText.setVisible(false);
+			fromText.setVisible(false);
+			departureText.setVisible(false);
+			arrivalText.setVisible(false);
+			dayText.setVisible(false);
+			flightIDText.setVisible(false);
+			flightNumText.setVisible(false);
+			capacityText.setVisible(false);
+			costText.setVisible(false);
+			title.setVisible(false);
+			
+		}
+	}
+	
+	public int testCustomerID(int id) {
+		double test = id;
+		int count = 0;
+		
+		while(test >= 1) {
+			test /= 10;
+			count += 1;
+		}
+		
+		return id / (int)Math.pow(10, count - 1); 
+	}
 	
 	public void switchToSplashScreen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
@@ -414,6 +462,38 @@ public class AccountController implements Initializable{
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	public void switchToFlightBooked(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("FlightBooked.fxml"));
+			Parent root1 = (Parent) fxmlLoader1.load();
+			Stage stage1 = new Stage();
+			stage1.setScene(new Scene(root1)); 
+			stage1.setResizable(false);
+			stage1.initModality(Modality.APPLICATION_MODAL);
+			stage1.show();
+			
+		} catch(Exception e) {
+			System.out.println("Shux");
+		}
+
+	}
+	
+	public void switchToOverlap(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("Overlap.fxml"));
+			Parent root1 = (Parent) fxmlLoader1.load();
+			Stage stage1 = new Stage();
+			stage1.setScene(new Scene(root1)); 
+			stage1.setResizable(false);
+			stage1.initModality(Modality.APPLICATION_MODAL);
+			stage1.show();
+			
+		} catch(Exception e) {
+			System.out.println("Shux");
+		}
+
 	}
 }
  

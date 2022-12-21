@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,9 +44,6 @@ public class ResetPasswordController implements Initializable{
 	@FXML public TextField pass1;
 	@FXML public TextField pass2;
 	
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
 	
 	@FXML private ComboBox securityQuestion;
 	
@@ -62,22 +60,6 @@ public class ResetPasswordController implements Initializable{
 	}
 	
 	
-	public void switchToSplashScreen(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-	
-	public void switchToMainPage(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-	
 	
 	public void handleResetPassword(ActionEvent event){
 		String sqlAnswer;
@@ -86,63 +68,63 @@ public class ResetPasswordController implements Initializable{
 		String password1;
 		String password2;
 		
-		boolean login;
+
 		
 		//enter sql customer values into corresponding variables
 		
 		password1 = pass1.getText();
 		password2 = pass2.getText();
 		
-		sqlAnswer = "";
-		sqlUserName = "";
-		sqlSecurityQuestion = "";
-		login = false;
+		sqlAnswer = "a";
+		sqlUserName = "a";
+		sqlSecurityQuestion = "option";
+
 		
-	/*	if(sqlSecurityQuestion.equals(securityQuestion.getValue().toString()) &&
+		if(securityQuestion.getSelectionModel().isEmpty() == true || use.getText().isEmpty() == true || answ.getText().isEmpty() == true) {
+			try {
+				FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("SecurityQuestionWrongAnswer.fxml"));
+				Parent root2 = (Parent) fxmlLoader2.load();
+				Stage stage2 = new Stage();
+				stage2.setScene(new Scene(root2)); 
+				stage2.setResizable(false);
+				stage2.initModality(Modality.APPLICATION_MODAL);
+				stage2.show();
+			} catch(IOException ex) {
+				System.out.print("Shux");
+			}
+		} else if(sqlSecurityQuestion.equals(securityQuestion.getValue().toString()) &&
 				sqlUserName.equals(use.getText()) && sqlAnswer.equals(answ.getText()) && 
 				password1.equals(password2)) {
-					
+			
 			// put password1 into sql;
-			login = true;		
+			Stage stage;
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			stage.close();		
+
+		
+		} else {
+			try {
+				FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("SecurityQuestionWrongAnswer.fxml"));
+				Parent root2 = (Parent) fxmlLoader2.load();
+				Stage stage2 = new Stage();
+				stage2.setScene(new Scene(root2)); 
+				stage2.setResizable(false);
+				stage2.initModality(Modality.APPLICATION_MODAL);
+				stage2.show();
+			} catch(IOException ex) {
+				System.out.print("Shux");
+			}
 		}
-		
-		*/
-		
-		if(login) {
-			try {
-				switchToMainPage(event);
-			} catch(IOException ex){
-				System.out.println("shux");
-			}
-		} /*else {
-			try {
-				switchToSplashScreen(event);
-			} catch(IOException ex){
-				System.out.println("shux");
-			}
-		} I'm not sure we want this else statement */
 	}
+		
 	
 	
 	public void handleExit(ActionEvent event){
-		boolean login;
-		
-		login = true;
-		
-		if(login) {
-			try {
-				switchToMainPage(event);
-			} catch(IOException ex){
-				System.out.println("shux");
-			}
-		} else {
-			try {
-				switchToSplashScreen(event);
-			} catch(IOException ex){
-				System.out.println("shux");
-			}
-		}
+		Stage stage;
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.close();
 	}
+	
 	
 
 	

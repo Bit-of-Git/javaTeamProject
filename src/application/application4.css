@@ -14,7 +14,7 @@
 	}
 
 .root {
-	-fx-background-color: #3b8ab5;
+	-fx-background-color: #98d2f4;
 }	
 	
 .button {
@@ -27,7 +27,12 @@
     -fx-font-style: oblique;
 }
 
-.label{
-	-fx-background-color: #24739c;
-	
+.titled-pane > .title {  
+    -fx-background-color: #87afc9;
 }
+
+.titled-pane > .content {  
+    -fx-background-color: #e7f0f5;
+}
+
+
