@@ -20,7 +20,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" layoutX="78.0" layoutY="42.0" mnemonicParsing="false" onAction="#switchToAccount" prefHeight="20.0" prefWidth="67.0" text="Ok" />
+      <Button alignment="CENTER" layoutX="78.0" layoutY="42.0" mnemonicParsing="false" onAction="#closeProgram" prefHeight="20.0" prefWidth="67.0" text="Ok" />
       <ImageView fitHeight="35.0" fitWidth="47.0" layoutX="18.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../crumple.JPG" />

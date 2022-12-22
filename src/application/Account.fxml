@@ -49,9 +49,9 @@
    <center>
       <TitledPane animated="false" collapsible="false" prefHeight="442.0" prefWidth="678.0" text="Flight Information" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="416.0" prefWidth="715.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="416.0" prefWidth="727.0">
                <children>
-                  <TableView fx:id="tableView" layoutY="8.0" prefHeight="414.0" prefWidth="708.0">
+                  <TableView fx:id="tableView" layoutY="-2.0" prefHeight="424.0" prefWidth="721.0" stylesheets="@application5.css">
                     <columns>
                       <TableColumn fx:id="flightIDColumn" prefWidth="53.0" text="Flight ID" />
                         <TableColumn fx:id="flightNumColumn" prefWidth="62.0" text="Flight #" />
@@ -61,7 +61,7 @@
                       <TableColumn fx:id="toColumn" prefWidth="113.0" text="To" />
                         <TableColumn fx:id="fromColumn" prefWidth="103.0" text="From" />
                         <TableColumn fx:id="leavingTimeColumn" prefWidth="83.0" text="Departure" />
-                        <TableColumn fx:id="arriveTimeColumn" text="Arrival" />
+                        <TableColumn fx:id="arriveTimeColumn" prefWidth="74.0" text="Arrival" />
                     </columns>
                   </TableView>
                </children>
