@@ -37,6 +37,10 @@ import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import java.util.ArrayList;
 import javafx.scene.control.TitledPane;
+import java.time.LocalDate;
+import javafx.scene.control.DatePicker;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 
@@ -57,6 +61,8 @@ public class AccountController implements Initializable{
 	@FXML private TextField location;
 	@FXML private TextField destination;
 	@FXML private TextField flightIDSearch;
+	@FXML private DatePicker datePicker;
+	@FXML private TextField departureTime;
 	
 	
 	@FXML private TextField toText;
@@ -70,6 +76,7 @@ public class AccountController implements Initializable{
 	@FXML private TextField costText;
 	@FXML private TitledPane title;
 	@FXML private Label labe1;
+	
 	
 	private int customerID;
 	
@@ -125,9 +132,22 @@ public class AccountController implements Initializable{
 	public void search(ActionEvent event) {
 		//need numm flights
 		//need all flight data. Make into matrix
-		
+		int flightIDVar;
+		int flightNumVar;
+		int capacityVar;
+		ArrayList<Integer> counter = new ArrayList<>();
+		int counter1;
+		double costVar;
+		String dayVar;
+		String toVar;
+		String fromVar;
+		String arriveTimeVar;
+		String leavingTimeVar;
 		int numFlights;
+		boolean start = true;
 		numFlights = 10;
+		LocalDate date; 
+		String formattedDate;
 		
 		
 		//get all dta entries from sql place all entries in folloing variables and usd place in observable list using below function
@@ -146,96 +166,221 @@ public class AccountController implements Initializable{
 		 */
 		
 		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		ArrayList<Flight> flights0 = new ArrayList<>();
 		ObservableList<Flight> flights1 = FXCollections.observableArrayList();
-		boolean locationDestinationBoolean = true;
+		boolean locationBoolean = true;
+		boolean destinationBoolean = true;
+		boolean departureTimeBoolean = true;
+		boolean dateBoolean = true;
 		boolean idSearchBoolean = true;
 		
 		for(int i = 0; i < numFlights; i++) {
 			if(i == 0){
-				int rand;
-				int flightIDVar = i;
-				int flightNumVar = (int)(Math.random() + 1) * 1000;
-				int capacityVar = 0;
-				double costVar = 100;
-				String dayVar = "4/25/2022";
-				String toVar = "Atlanta";
-				String fromVar = "Chicago";
-				String arriveTimeVar = "4:00 PM";
-				String leavingTimeVar = "2:00 PM";
+				flightIDVar = i;
+				flightNumVar = (int)(Math.random() + 1) * 1000;
+				capacityVar = 0;
+				costVar = 100;
+				dayVar = "03-05-2023";
+				toVar = "Atlanta";
+				fromVar = "Chicago";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			} else if(i<7) {
-				int rand;
-				int flightIDVar = i;
-				int flightNumVar = (int)(Math.random() + 1) * 1000;
-				int capacityVar = 15 * (int)(Math.random() + 0);
-				double costVar = 100;
-				String dayVar = "4/25/2022";
-				String toVar = "Atlanta";
-				String fromVar = "Chicago";
-				String arriveTimeVar = "4:00 PM";
-				String leavingTimeVar = "2:00 PM";
+				flightIDVar = i;
+				flightNumVar = (int)(Math.random() + 1) * 1000;
+				capacityVar = 15 * (int)(Math.random() + 0);
+				costVar = 100;
+				dayVar = "03-05-2023";
+				toVar = "Atlanta";
+				fromVar = "Chicago";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			} else {
-				int flightIDVar = i;
-				int flightNumVar = 1;
-				int capacityVar = 1;
-				double costVar = 1;
-				String dayVar = "4/25/2022";
-				String toVar = "New York";
-				String fromVar = "Boston";
-				String arriveTimeVar = "4:00 PM";
-				String leavingTimeVar = "2:00 PM";
+				flightIDVar = i;
+				flightNumVar = 1;
+				capacityVar = 1;
+				costVar = 1;
+				dayVar = "03-05-2023";
+				toVar = "New York";
+				fromVar = "Boston";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			}
 		}
 		
-    	if(location.getText().isEmpty() || destination.getText().isEmpty()) {
-    		locationDestinationBoolean = false;
-    	} 
-    	if(flightIDSearch.getText().isEmpty()) {
-    		idSearchBoolean = false;
+    	if(location.getText().isEmpty()) {
+    		locationBoolean = false;
+    	} else {
+    		if(start) {
+                for (Flight flight: flights) {
+                	if(location.getText().equalsIgnoreCase(flight.getFrom())) { 
+                		flights0.add(flight);
+                	} 
+        		}
+                start = false;
+    		} else {
+        		counter1 = 0;
+                for (Flight flight: flights0) {
+                	if(location.getText().equalsIgnoreCase(flight.getFrom())) { 
+                		
+                	} else {
+                		counter.add(counter1);
+                	}
+                	counter1 = counter1 + 1;
+        		}
+                
+                for(int i = counter.size() - 1; i >= 0; i--) {
+                	flights0.remove(counter.get(i).intValue());
+                }
+    		}
+
     	}
     	
-    	if(locationDestinationBoolean && idSearchBoolean) {
-            for (Flight flight: flights) {
-            	int flightIDVar = -1;
-            	
-    	        try{
-    	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
-    	        }
-    	        catch (NumberFormatException ex){
-    	            ex.printStackTrace();
-    	        }
+    	if(destination.getText().isEmpty()) {
+    		destinationBoolean = false;
+    	} else {
+    		if(start) {
+                for (Flight flight: flights) {
+                	if(destination.getText().equalsIgnoreCase(flight.getTo())) { 
+                		flights0.add(flight);
+                	} 
+        		}
+                start = false;
+    		} else {
+        		counter1 = 0;
+                for (Flight flight: flights0) {
+                	if(destination.getText().equalsIgnoreCase(flight.getTo())) { 
 
-            	if(flight.getFlightID() == flightIDVar && flight.getTo().equals(location.getText()) && destination.getText().equals(flight.getFrom())) { 
-            		flights1.add(flight);
-            	} 
+                	} else {
+                		counter.add(counter1);
+                	}
+                	counter1 = counter1 + 1;
+        		}
+                
+                for(int i = counter.size() - 1; i >= 0; i--) {
+                	flights0.remove(counter.get(i).intValue());
+                }
     		}
-            
-    	} else if(locationDestinationBoolean) {
-            for (Flight flight: flights) {
-            	if(flight.getTo().equals(location.getText()) && destination.getText().equals(flight.getFrom())) { 
-            		flights1.add(flight);
-            	} 
-    		}
-    	} else if(idSearchBoolean) {
-            for (Flight flight: flights) {
-            	int flightIDVar = -1;
-          
-    	        try{
-    	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
-    	        }
-    	        catch (NumberFormatException ex){
-    	            ex.printStackTrace();
-    	        }
 
-            	if(flight.getFlightID() == flightIDVar) { 
-            		flights1.add(flight);
-            	} 
-    		}
     	}
+    	
+    	if(datePicker.getValue() == null) {
+    		dateBoolean = false;
+    	} else {
+			date = datePicker.getValue();
+			formattedDate = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+    		if(start) {
+                for (Flight flight: flights) {
+                	if(formattedDate.toString().equalsIgnoreCase(flight.getDay())) { 
+                		flights0.add(flight);
+                	} 
+        		}
+                start = false;
+    		} else {
+    			counter1 = 0;
+                for (Flight flight: flights0) {
+                	
+                	if(formattedDate.toString().equalsIgnoreCase(flight.getDay())) { 
+
+                	} else {
+                		counter.add(counter1);
+                	}
+                	counter1 = counter1 + 1;
+        		}
+                
+                for(int i = counter.size() - 1; i >= 0; i--) {
+                	flights0.remove(counter.get(i).intValue());
+                }
+    		}
+
+    	}
+    	
+    	if(departureTime.getText().isEmpty()) {
+    		departureTimeBoolean = false;
+    	} else {
+    		if(start) {
+                for (Flight flight: flights) {
+                	if(departureTime.getText().equalsIgnoreCase(flight.getLeavingTime())) { 
+                		flights0.add(flight);
+                	} 
+        		}
+                start = false;
+    		} else {
+    			counter1 = 0;
+                for (Flight flight: flights0) {
+                	if(departureTime.getText().equalsIgnoreCase(flight.getLeavingTime())) { 
+
+                	} else {
+                		counter.add(counter1);
+                	}
+                	counter1 = counter1 + 1;
+        		}
+                
+                for(int i = counter.size() - 1; i >= 0; i--) {
+                	flights0.remove(counter.get(i).intValue());
+                }
+    		}
+
+    	}
+    	
+    	if(flightIDSearch.getText().isEmpty()) {
+    		idSearchBoolean = false;
+    	} else {
+    		if(start) {
+                for (Flight flight: flights) {
+                	flightIDVar = -1;
+                    
+        	        try{
+        	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
+                    	if(flight.getFlightID() == flightIDVar) { 
+                    		flights0.add(flight);
+                    	} 
+        	        }
+        	        catch (NumberFormatException ex){
+        	            ex.printStackTrace();
+        	        }
+
+
+        		}
+                start = false;
+    		} else {
+    			counter1 = 0;
+                for (Flight flight: flights0) {
+                	flightIDVar = -1;
+                    
+        	        try{
+        	        	flightIDVar = Integer.parseInt(flightIDSearch.getText());
+                    	if(flight.getFlightID() == flightIDVar) { 
+
+                    	} else {
+                    		counter.add(counter1);
+                    	}
+                    	counter1 = counter1 + 1;
+        	        }
+        	        catch (NumberFormatException ex){
+        	            ex.printStackTrace();
+        	        }
+        	        
+
+        		}
+                
+                for(int i = counter.size() - 1; i >= 0; i--) {
+                	flights0.remove(counter.get(i).intValue());
+                }
+    		}
+
+    	}
+    	
+    	
+    	
 		
-        if(locationDestinationBoolean || idSearchBoolean) {
+        if(locationBoolean || idSearchBoolean || departureTimeBoolean || dateBoolean || destinationBoolean) {
+        	for(Flight flight: flights0) {
+        		flights1.add(flight);
+        	}
         	tableView.setItems(flights1);
         } 
         
@@ -433,11 +578,22 @@ public class AccountController implements Initializable{
 	}
 	
 	public void switchToMainPage(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root); 
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MainPage.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        MainController controller = loader.getController();
+        controller.initData(customerID);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 	
 	public void handleSignOut(ActionEvent event){

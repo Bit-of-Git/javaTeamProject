@@ -1,4 +1,4 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
 * {
 	true: #3b8ab5;
 	primaryColor: #2596be;
@@ -14,7 +14,7 @@
 	}
 
 .root {
-	-fx-background-color: #98d2f4;
+	-fx-background-color: #61a4c6;
 }	
 	
 .button {
@@ -22,9 +22,9 @@
     -fx-padding: 5;
     -fx-background-color: #2a6c8c;
     -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
-    -fx-background-radius: 8;
+    -fx-background-radius: 2.5;
     -fx-cursor: hand; 
-    -fx-font-style: oblique;
+
 }
 
 

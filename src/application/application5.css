@@ -1,4 +1,4 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
 * {
 	true: #3b8ab5;
 	primaryColor: #2596be;
@@ -14,7 +14,7 @@
 	}
 	
 .root {
-	-fx-background-color: #3b8ab5;
+	-fx-background-color: #2596be;
 }	
 	
 .button {
@@ -24,9 +24,11 @@
     -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
     -fx-background-radius: 8;
     -fx-cursor: hand; 
-    -fx-font-style: oblique;
 }
 
+.titled-pane > .title {  
+    -fx-background-color:  #3b8ab5;
+}
 
 .table-view {
     -fx-background-color: transparent;
@@ -43,9 +45,7 @@
 
 .table-view .column-header-background{
     -fx-background-color: linear-gradient(to bottom, #98d2f4, #6291ae);
-    -fx-background-radius: 7px 7px 0px 0px;
-    -fx-background-insets: 0 11px 0 0;
-    -fx-padding: 0 0 5px 0;
+
 }
 
 .table-view .column-header {
@@ -57,41 +57,41 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell: hover {
+.table-row-cell:hover {
     -fx-background-color: #93f9b911;
     -fx-text-background-color: red;
 }
-.table-row-cell: odd{
+.table-row-cell:odd{
     -fx-background-color: #52b9dd;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
-.table-row-cell: even{
+.table-row-cell:even{
     -fx-background-color: #59bfe4;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
-.table-view .virtual-flow .scroll-bar:vertical,
-.table-view .virtual-flow .scroll-bar:vertical .track,
-.table-view .virtual-flow .scroll-bar:vertical .track-background,
-.table-view .virtual-flow .scroll-bar:horizontal,
-.table-view .virtual-flow .scroll-bar:horizontal .track,
-.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+.scroll-bar:vertical,
+.scroll-bar:vertical.track,
+.scroll-bar:vertical.track-background,
+.scroll-bar:horizontal,
+.scroll-bar:horizontal.track,
+.scroll-bar:horizontal.track-background {
     -fx-background-color: transparent;
 }
 
-.table-view .virtual-flow .scroll-bar .increment-button,
-.table-view .virtual-flow .scroll-bar .decrement-button {
+.scroll-bar.increment-button,
+.scroll-bar.decrement-button {
     -fx-opacity: 0;
     -fx-padding: 2;
 }
 
-.table-view .virtual-flow .scroll-bar:vertical .thumb{
+.scroll-bar:vertical.thumb{
     -fx-background-color:  linear-gradient(to bottom, #1dbbdd44, #93f9b944);
 }
-.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+.scroll-bar:horizontal.thumb {
     -fx-background-color:  linear-gradient(to right, #1dbbdd44, #93f9b944);
 }
 

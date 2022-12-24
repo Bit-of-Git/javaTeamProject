@@ -50,6 +50,7 @@ public class BookingController implements Initializable{
 	@FXML private TableColumn<Flight, String> arriveTimeColumn;
 	@FXML private TableColumn<Flight, String> leavingTimeColumn;
 	
+	private int customerID;
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		flightIDColumn.setCellValueFactory(new PropertyValueFactory<Flight, Integer> ("flightID"));
@@ -65,11 +66,23 @@ public class BookingController implements Initializable{
 		tableView.setItems(getFlights());
 		
 	}
+	
 	public ObservableList<Flight> getFlights(){
-		int numRows;
+		int flightIDVar = 1;
+		int flightNumVar = 1;
+		int capacityVar = 1;
+		double costVar = 1;
+		String dayVar = "4/25/2022";
+		String toVar = "Atlanta";
+		String fromVar = "Chicago";
+		String arriveTimeVar = "4:00 PM";
+		String leavingTimeVar = "2:00 PM";
+		int numFlights;
+		boolean start = true;
+		numFlights = 100;
 		
+		ObservableList<Flight> flights = FXCollections.observableArrayList();
 		
-		numRows = 10;
 		//numRows = length of SQL query for initial data
 		
 		//use loop to add values use sql query in loop to set vars
@@ -80,17 +93,45 @@ public class BookingController implements Initializable{
 		}
 		*/
 		
-		int flightIDVar = 1;
-		int flightNumVar = 1;
-		int capacityVar = 1;
-		double costVar = 1;
-		String dayVar = "4/25/2022";
-		String toVar = "Atlanta";
-		String fromVar = "Chicago";
-		String arriveTimeVar = "4:00 PM";
-		String leavingTimeVar = "2:00 PM";
+		for(int i = 0; i < numFlights; i++) {
+			if(i == 0){
+				flightIDVar = i;
+				flightNumVar = (int)(Math.random() + 1) * 1000;
+				capacityVar = 0;
+				costVar = 100;
+				dayVar = "03-05-2023";
+				toVar = "Atlanta";
+				fromVar = "Chicago";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			} else if(i<7) {
+				flightIDVar = i;
+				flightNumVar = (int)(Math.random() + 1) * 1000;
+				capacityVar = 15 * (int)(Math.random() + 0);
+				costVar = 100;
+				dayVar = "03-05-2023";
+				toVar = "Atlanta";
+				fromVar = "Chicago";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			} else {
+				flightIDVar = i;
+				flightNumVar = 1;
+				capacityVar = 1;
+				costVar = 1;
+				dayVar = "03-05-2023";
+				toVar = "New York";
+				fromVar = "Boston";
+				arriveTimeVar = "16:00";
+				leavingTimeVar = "14:00";
+				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+			}
+		}
+		
 		//Delete below and use for loop in tandem with sql query
-		ObservableList<Flight> flights = FXCollections.observableArrayList();
+
 		flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 		return flights;
 	}
@@ -119,11 +160,22 @@ public class BookingController implements Initializable{
 	}
 	
 	public void switchToMainPage(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root); 
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MainPage.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        MainController controller = loader.getController();
+        controller.initData(customerID);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 	
 	public void handleSignOut(ActionEvent event){
@@ -140,6 +192,10 @@ public class BookingController implements Initializable{
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public void initData(int custID) {
+		customerID = custID;
 	}
 	    
 	    

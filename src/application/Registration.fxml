@@ -5,6 +5,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,143 +15,190 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistrationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@application3.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistrationController">
    <center>
       <VBox prefHeight="342.0" prefWidth="228.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="28.0" prefWidth="478.0">
+            <HBox prefHeight="40.0" prefWidth="734.0">
                <children>
-                  <Label prefHeight="19.0" prefWidth="454.0" text="Registration">
+                  <Label prefHeight="30.0" prefWidth="210.0" text="Account Registration">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#backToMainHandler" prefHeight="25.0" prefWidth="438.0" text="Back to Main">
                      <HBox.margin>
-                        <Insets right="250.0" top="3.0" />
+                        <Insets right="400.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#backToMainHandler" prefHeight="25.0" prefWidth="135.0" text="Back to Main">
+                     <HBox.margin>
+                        <Insets top="5.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <Line endX="375.0" startX="-100.0" strokeWidth="3.0" />
-            <Region prefHeight="23.0" prefWidth="223.0" />
-            <HBox prefHeight="50.0" prefWidth="477.0">
+            <Line endX="630.0" startX="-100.0" strokeWidth="3.0" />
+            <Region prefHeight="10.0" prefWidth="733.0" />
+            <HBox prefHeight="22.0" prefWidth="733.0">
                <children>
-                  <VBox prefHeight="58.0" prefWidth="241.0">
-                     <children>
-                        <Label text="User Name">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin></Label>
-                        <TextField fx:id="user">
-                           <VBox.margin>
-                              <Insets right="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="58.0" prefWidth="233.0">
-                     <children>
-                        <Label text="Password">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin></Label>
-                        <TextField fx:id="pass" prefHeight="25.0" prefWidth="145.0">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                  </VBox>
+                  <Region prefHeight="25.0" prefWidth="311.0" />
+                  <Label text="Personal Details">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
-            <HBox prefHeight="42.0" prefWidth="494.0">
+            <Region prefHeight="10.0" prefWidth="200.0" />
+            <HBox prefHeight="33.0" prefWidth="733.0">
                <children>
-                  <VBox prefHeight="42.0" prefWidth="241.0">
-                     <children>
-                        <Label text="First Name">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="first">
-                           <VBox.margin>
-                              <Insets right="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="42.0" prefWidth="233.0">
-                     <children>
-                        <Label text="Last Name" />
-                        <TextField fx:id="last" prefHeight="25.0" prefWidth="223.0" />
-                     </children>
-                  </VBox>
+                  <Label text="First Name:">
+                     <HBox.margin>
+                        <Insets right="7.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="first" prefHeight="25.0" prefWidth="250.0" />
+                  <Region prefHeight="33.0" prefWidth="99.0" />
+                  <Label text="Last Name:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="last" prefHeight="25.0" prefWidth="250.0" />
                </children>
             </HBox>
-            <Label text="Adress">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="adress" />
-            <HBox prefHeight="44.0" prefWidth="477.0">
+            <HBox prefHeight="29.0" prefWidth="733.0">
                <children>
-                  <VBox prefHeight="42.0" prefWidth="269.0">
-                     <children>
-                        <Label text="State" />
-                        <TextField fx:id="state">
-                           <VBox.margin>
-                              <Insets right="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </VBox>
-                  <VBox prefHeight="42.0" prefWidth="260.0">
-                     <children>
-                        <Label text="Zip Code" />
-                        <TextField fx:id="zip" prefHeight="25.0" prefWidth="54.0" />
-                     </children>
-                  </VBox>
+                  <Label text="Adress:">
+                     <HBox.margin>
+                        <Insets right="28.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="adress" prefHeight="25.0" prefWidth="668.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="31.0" prefWidth="733.0">
+               <children>
+                  <Label text="State:">
+                     <HBox.margin>
+                        <Insets right="37.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="state" prefHeight="25.0" prefWidth="150.0" />
+                  <Region prefHeight="31.0" prefWidth="60.0" />
+                  <Label text="Zip Code:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="zip" prefHeight="25.0" prefWidth="75.0" />
+                  <Region prefHeight="31.0" prefWidth="61.0" />
+                  <Label text="Social Security Number:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="ssn" prefHeight="25.0" prefWidth="125.0" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <Label text="Email">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="email" />
-            <ComboBox fx:id="securityQuestion" prefWidth="150.0" promptText="Security Question">
-               <VBox.margin>
-                  <Insets top="8.0" />
-               </VBox.margin>
-            </ComboBox>
-            <TextField fx:id="answer" />
-            <ComboBox fx:id="securityQuestion2" prefWidth="150.0" promptText="Security Question 2" />
-            <TextField fx:id="answer2">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </TextField>
+            <HBox prefHeight="36.0" prefWidth="733.0">
+               <children>
+                  <Label text="Email:">
+                     <HBox.margin>
+                        <Insets right="36.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="email" prefHeight="25.0" prefWidth="668.0" />
+               </children>
+            </HBox>
+            <Line endX="630.0" startX="-100.0" />
+            <Region prefHeight="10.0" prefWidth="734.0" />
+            <HBox prefHeight="26.0" prefWidth="733.0">
+               <children>
+                  <Region prefHeight="26.0" prefWidth="295.0" />
+                  <Label text="Account Information">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Region prefHeight="10.0" prefWidth="734.0" />
+            <HBox prefHeight="34.0" prefWidth="733.0">
+               <children>
+                  <Label text="User Name:">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="user" prefHeight="25.0" prefWidth="250.0" />
+                  <Region prefHeight="34.0" prefWidth="105.0" />
+                  <Label text="Password:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="pass" prefHeight="25.0" prefWidth="250.0" />
+               </children>
+            </HBox>
+            <Line endX="630.0" startX="-100.0" />
+            <Region prefHeight="10.0" prefWidth="734.0" />
+            <HBox prefHeight="23.0" prefWidth="733.0">
+               <children>
+                  <Region prefHeight="25.0" prefWidth="300.0" />
+                  <Label text="Password Recovery">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Region prefHeight="10.0" prefWidth="734.0" />
+            <HBox prefHeight="83.0" prefWidth="734.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ComboBox fx:id="securityQuestion" prefHeight="25.0" prefWidth="175.0" promptText="Security Question" style="-fx-background-color: #24739c;">
+                           <effect>
+                              <DropShadow />
+                           </effect></ComboBox>
+                        <Region prefHeight="15.0" prefWidth="200.0" />
+                        <ComboBox fx:id="securityQuestion2" prefHeight="25.0" prefWidth="150.0" promptText="Security Question 2" style="-fx-background-color: #24739c;">
+                           <effect>
+                              <DropShadow />
+                           </effect></ComboBox>
+                     </children>
+                  </VBox>
+                  <Region prefHeight="50.0" prefWidth="15.0" />
+                  <VBox prefHeight="200.0" prefWidth="250.0">
+                     <children>
+                        <TextField fx:id="answer" prefHeight="25.0" prefWidth="250.0" />
+                        <Region prefHeight="15.0" prefWidth="200.0" />
+                        <TextField fx:id="answer2" prefHeight="25.0" prefWidth="250.0" />
+                     </children>
+                  </VBox>
+                  <Region prefHeight="83.0" prefWidth="55.0" />
+                  <VBox prefHeight="83.0" prefWidth="233.0">
+                     <children>
+                        <ImageView fitHeight="83.0" fitWidth="235.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../PlaneFly.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>
    <left>
-      <VBox prefHeight="342.0" prefWidth="177.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="383.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </VBox>
+      <VBox prefHeight="383.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
       <Button mnemonicParsing="false" onAction="#registrationHandler" prefHeight="43.0" prefWidth="869.0" text="Submit Registration" BorderPane.alignment="CENTER">

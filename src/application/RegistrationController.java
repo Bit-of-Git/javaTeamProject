@@ -55,6 +55,7 @@ public class RegistrationController implements Initializable{
 	@FXML public TextField answer;
 	@FXML public TextField answer2;
 	@FXML public TextField zip;
+	@FXML public TextField ssn;
 	
 	@FXML private ComboBox securityQuestion = new ComboBox();
 	@FXML private ComboBox securityQuestion2 = new ComboBox();
@@ -114,7 +115,8 @@ public class RegistrationController implements Initializable{
 			 * email.getText();
 			 * answer.getText();
 			 * answer2.getText();
-			 * zip.getText();
+			 * zip.getText()
+			 * ssn.getText();
 			 */
 			backToMainHandler(event);
 		}

@@ -94,11 +94,22 @@ public class MainController implements Initializable{
 	}
 	
 	public void switchToBooked(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("Booking.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Booking.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        BookingController controller = loader.getController();
+        controller.initData(customerID);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 	
 	
