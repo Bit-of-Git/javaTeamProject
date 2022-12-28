@@ -103,7 +103,7 @@ public class LogInContoller {
 		sqlPassword = "";
 		
 		login = false;
-		cust = 21234;
+		cust = 1234;
 		
 		if(user.equals(sqlUserNamer) && pass.equals(sqlPassword)) {
 			login = true;
