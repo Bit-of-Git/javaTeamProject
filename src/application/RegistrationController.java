@@ -100,7 +100,6 @@ public class RegistrationController implements Initializable{
 	//method for the submit registration button
 	public void registrationHandler(ActionEvent event) {
 		
-		
 		if(true) {
 			//return all of these elements to sql database
 			/*

@@ -79,6 +79,7 @@ public class AccountController implements Initializable{
 	
 	
 	private int customerID;
+	private String CustomerUser;
 	
 	
 	public void initialize(URL url, ResourceBundle rb) {
@@ -93,7 +94,6 @@ public class AccountController implements Initializable{
 		leavingTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String> ("leavingTime"));
 		
 		tableView.setItems(getFlights());
-		
 		
 		
 	}
@@ -132,6 +132,9 @@ public class AccountController implements Initializable{
 	public void search(ActionEvent event) {
 		//need numm flights
 		//need all flight data. Make into matrix
+		
+		//MM-dd-yyyy this is what date picker gives back
+		
 		int flightIDVar;
 		int flightNumVar;
 		int capacityVar;
@@ -478,7 +481,7 @@ public class AccountController implements Initializable{
 		        }
 		        
 		        try{
-		        	costVar = Integer.parseInt(costText.getText());
+		        	costVar = Double.parseDouble(costText.getText());
 		        }
 		        catch (NumberFormatException ex){
 		            ex.printStackTrace();
@@ -613,11 +616,18 @@ public class AccountController implements Initializable{
 	}
 	
 	public void switchToError(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("Error.fxml"));
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		try {
+			FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("Error.fxml"));
+			Parent root1 = (Parent) fxmlLoader1.load();
+			Stage stage1 = new Stage();
+			stage1.setScene(new Scene(root1)); 
+			stage1.setResizable(false);
+			stage1.initModality(Modality.APPLICATION_MODAL);
+			stage1.show();
+			
+		} catch(Exception e) {
+			System.out.println("Shux");
+		}
 	}
 	
 	public void switchToFlightBooked(ActionEvent event) {

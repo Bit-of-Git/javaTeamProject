@@ -68,7 +68,7 @@ public class ResetPasswordController implements Initializable{
 		String password1;
 		String password2;
 		
-
+		
 		
 		//enter sql customer values into corresponding variables
 		
@@ -78,8 +78,13 @@ public class ResetPasswordController implements Initializable{
 		sqlAnswer = "a";
 		sqlUserName = "a";
 		sqlSecurityQuestion = "option";
-
 		
+		
+		//use some kind of loop to check if the entered username security question and answer equal any of the entries in the database
+		
+		
+		//for
+
 		if(securityQuestion.getSelectionModel().isEmpty() == true || use.getText().isEmpty() == true || answ.getText().isEmpty() == true) {
 			try {
 				FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("SecurityQuestionWrongAnswer.fxml"));
