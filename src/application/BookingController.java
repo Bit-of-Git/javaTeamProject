@@ -50,7 +50,8 @@ public class BookingController implements Initializable{
 	@FXML private TableColumn<Flight, String> arriveTimeColumn;
 	@FXML private TableColumn<Flight, String> leavingTimeColumn;
 	
-	private int customerID;
+	private String customerUser;
+	private boolean admin;
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		flightIDColumn.setCellValueFactory(new PropertyValueFactory<Flight, Integer> ("flightID"));
@@ -166,7 +167,7 @@ public class BookingController implements Initializable{
         
         //access the controller and call a method
         MainController controller = loader.getController();
-        controller.initData(customerID);
+        controller.initData(customerUser, admin);
         
         Scene scene3 = new Scene(parent3);
         
@@ -194,8 +195,9 @@ public class BookingController implements Initializable{
 		}
 	}
 	
-	public void initData(int custID) {
-		customerID = custID;
+	public void initData(String customer, boolean admin1) {
+		customerUser = customer;
+		admin = admin1;
 	}
 	    
 	    

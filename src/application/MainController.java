@@ -44,12 +44,15 @@ public class MainController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
-	private int customerID;
+	private String customerUser;
+	private boolean admin;
 	
 	
 	
-	public void initData(int customer) {
-		customerID = customer;
+	public void initData(String customer, boolean admin1) {
+		customerUser = customer;
+		admin = admin1;
+		System.out.println(admin);
 	}
 	
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,7 +84,7 @@ public class MainController implements Initializable{
         
         //access the controller and call a method
         AccountController controller = loader.getController();
-        controller.initData(customerID);
+        controller.initData(customerUser, admin);
         
         Scene scene3 = new Scene(parent3);
         
@@ -100,7 +103,7 @@ public class MainController implements Initializable{
         
         //access the controller and call a method
         BookingController controller = loader.getController();
-        controller.initData(customerID);
+        controller.initData(customerUser, admin);
         
         Scene scene3 = new Scene(parent3);
         

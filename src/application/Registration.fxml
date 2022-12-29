@@ -26,9 +26,15 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="400.0" top="5.0" />
+                        <Insets right="10.0" top="5.0" />
                      </HBox.margin>
                   </Label>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToAdminLogin" text="Admin Registration">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Region prefHeight="40.0" prefWidth="263.0" />
                   <Button mnemonicParsing="false" onAction="#backToMainHandler" prefHeight="25.0" prefWidth="135.0" text="Back to Main">
                      <HBox.margin>
                         <Insets top="5.0" />

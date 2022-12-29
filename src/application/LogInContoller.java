@@ -42,10 +42,12 @@ public class LogInContoller {
 	private Scene scene;
 	private Parent root; 
 	
-	private int cust;
+	private String customerUser;
 	
 	public TextField TextFieldUser1;
 	public TextField TextFieldPassword1;
+	
+	boolean admin;
 	
 	
 
@@ -57,7 +59,7 @@ public class LogInContoller {
         
         //access the controller and call a method
         MainController controller = loader.getController();
-        controller.initData(cust);
+        controller.initData(customerUser, admin);
         
         Scene scene3 = new Scene(parent3);
         
@@ -103,7 +105,9 @@ public class LogInContoller {
 		sqlPassword = "";
 		
 		login = false;
-		cust = 1234;
+		customerUser = "HelloWorld";
+		
+		admin = true;
 		
 		if(user.equals(sqlUserNamer) && pass.equals(sqlPassword)) {
 			login = true;

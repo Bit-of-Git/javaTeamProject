@@ -40,7 +40,7 @@ import javafx.scene.control.TitledPane;
 import java.time.LocalDate;
 import javafx.scene.control.DatePicker;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+
 
 
 
@@ -78,8 +78,9 @@ public class AccountController implements Initializable{
 	@FXML private Label labe1;
 	
 	
-	private int customerID;
-	private String CustomerUser;
+
+	private String customerUser;
+	private boolean admin;
 	
 	
 	public void initialize(URL url, ResourceBundle rb) {
@@ -523,19 +524,14 @@ public class AccountController implements Initializable{
 		}
 	} 
 
-	public void initData(int custID) {
-		customerID = custID;
-		
+	public void initData(String customer, boolean admin1) {
+		customerUser = customer;
+		admin = admin1;
+		System.out.println(admin);
 		
 		//We need the customer ID, check for whether admin or not
 
-		boolean admin = false; 		
-		if(testCustomerID(customerID) == 1) {
-			admin = true;
-		}
-		
 		if(admin) {
-			
 			String selec1 = "Book";
 			String selec2 = "Add";
 			String selec3 = "Delete";
@@ -560,17 +556,7 @@ public class AccountController implements Initializable{
 		}
 	}
 	
-	public int testCustomerID(int id) {
-		double test = id;
-		int count = 0;
-		
-		while(test >= 1) {
-			test /= 10;
-			count += 1;
-		}
-		
-		return id / (int)Math.pow(10, count - 1); 
-	}
+
 	
 	public void switchToSplashScreen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
@@ -587,7 +573,7 @@ public class AccountController implements Initializable{
         
         //access the controller and call a method
         MainController controller = loader.getController();
-        controller.initData(customerID);
+        controller.initData(customerUser, admin);
         
         Scene scene3 = new Scene(parent3);
         

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -59,6 +60,8 @@ public class RegistrationController implements Initializable{
 	
 	@FXML private ComboBox securityQuestion = new ComboBox();
 	@FXML private ComboBox securityQuestion2 = new ComboBox();
+	
+	private boolean admin = false;
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		String selec1 = "option";
@@ -118,7 +121,36 @@ public class RegistrationController implements Initializable{
 			 * ssn.getText();
 			 */
 			backToMainHandler(event);
+			System.out.println(admin);
 		}
 		
+	}
+	
+	public void switchToAdminLogin(ActionEvent event) {
+		try {
+			switchToAdmin(event);
+			
+		} catch(Exception e) {
+			System.out.println("Shux");
+		}
+
+	}
+	
+	private void switchToAdmin(ActionEvent event) throws IOException {
+	    FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("AdminRegistration.fxml"));
+	    Parent parent = fXMLLoader.load();
+	    AdminRegistrationContoller controller = fXMLLoader.getController();
+	    controller.setFXMLRegistrationController(this); // Pass this controller to NewCustomerController
+	    Stage stage = new Stage();
+	    Scene scene = new Scene(parent);
+	    stage.setScene(scene);
+	    stage.show();
+	}
+
+    
+	
+	public void initData(boolean adm){
+		admin = adm;
+		System.out.println(admin);
 	}
 }

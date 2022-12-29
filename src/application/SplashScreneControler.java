@@ -38,6 +38,17 @@ import javafx.scene.image.Image;
 public class SplashScreneControler implements Initializable{
 	
 	ImageView image1;
+
+	
+	public Button login;
+	public Button register;
+	public TextField TextFieldUser;
+	public TextField TextFieldPassword;
+	
+
+	private boolean admin;
+	private String user;
+	private String pass;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		//Image im1 = new Image("Main_image.png");
@@ -45,10 +56,7 @@ public class SplashScreneControler implements Initializable{
 	}
 	
 	
-	public Button login;
-	public Button register;
-	public TextField TextFieldUser;
-	public TextField TextFieldPassword;
+
 	
 	public void switchToSplashScreen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
@@ -67,11 +75,22 @@ public class SplashScreneControler implements Initializable{
 	}
 	
 	public void switchToMainPage(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root); 
-		stage.setScene(scene);
-		stage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MainPage.fxml"));
+        Parent parent3 = loader.load();
+        
+        //access the controller and call a method
+        MainController controller = loader.getController();
+        controller.initData(user, admin);
+        
+        Scene scene3 = new Scene(parent3);
+        
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(scene3);
+        window.show();
 	}
 
 	public void switchToRegistration(ActionEvent event) throws IOException {
@@ -92,14 +111,15 @@ public class SplashScreneControler implements Initializable{
 	
 	public void handleLoginClick(ActionEvent event) {
 		boolean login;
-		String user = TextFieldUser.getText();
-		String pass = TextFieldPassword.getText();
-		System.out.println(user);
-		
+		user = TextFieldUser.getText();
+		pass = TextFieldPassword.getText();
 		//we need sql username and password if equals can login
 		
 		String sqlUserName = "abc";
 		String sqlPassword = "1234";
+		
+		
+		admin = false;
 		
 		if(user.equals(sqlUserName) && pass.equals(sqlPassword)) {
 			login = true;
