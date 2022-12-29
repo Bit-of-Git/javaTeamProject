@@ -82,7 +82,7 @@
             <Button layoutX="791.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleSignOut" text="Sign Out" />
             <TextField fx:id="location" layoutY="6.0" prefHeight="25.0" prefWidth="144.0" promptText="Where are you " />
             <TextField fx:id="destination" layoutX="144.0" layoutY="6.0" promptText="Where are you going" />
-            <DatePicker fx:id="datePicker" layoutX="395.0" layoutY="6.0" prefHeight="25.0" prefWidth="151.0" promptText="Enter a Date" />
+            <DatePicker fx:id="datePicker" layoutX="395.0" layoutY="6.0" prefHeight="25.0" prefWidth="151.0" promptText="Enter a Date" stylesheets="@application7.css" />
             <TextField fx:id="departureTime" layoutX="546.0" layoutY="6.0" prefHeight="25.0" prefWidth="120.0" promptText="Departure Time" />
             <Button layoutX="666.0" layoutY="6.0" mnemonicParsing="false" onAction="#search" text="Search" />
             <TextField fx:id="flightIDSearch" layoutX="293.0" layoutY="6.0" prefHeight="25.0" prefWidth="102.0" promptText="Flight ID" />
