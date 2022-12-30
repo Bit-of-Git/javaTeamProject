@@ -18,7 +18,7 @@ public class Admins extends Customer implements Users {
 		this.email = email;
 		this.securityQ = securityQ;
 		this.securityA = securityA;
-		this.ssn = ssn;
+		this.ssn = SSN;
 		}
 }
 

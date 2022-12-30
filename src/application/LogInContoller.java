@@ -55,6 +55,8 @@ public class LogInContoller {
 	
 	boolean admin;
 	
+	public static String custUser;
+	
 	
 
 	
@@ -125,22 +127,24 @@ public class LogInContoller {
 			while (rs.next()) {
 				custU.addAll(new String(rs.getObject(2).toString()));
 				custP.addAll(new String(rs.getObject(3).toString()));
-			
+				
 				
 				
 				if (custU.containsAll(clogU) && custP.containsAll(clogP)) {
 					System.out.println("login SUCCESS");
 					login = true;
+					custUser = rs.getObject(2).toString();
 					break;
 				}
 			}
-			
+		
 			
 			
 		} catch (Exception ex) {
 			System.out.println("oof");
 			
 		}
+		
 		
 		sqlUserNamer = "";
 		sqlPassword = "";
@@ -203,7 +207,9 @@ public class LogInContoller {
 		}
 
 	}
-
+	public static String getUser() {
+		return custUser;
+	}
 	
 	
 	
