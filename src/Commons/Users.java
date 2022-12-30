@@ -1,5 +1,5 @@
 package Commons;
 
-public abstract Users {
+public abstract class Users {
 
 }
