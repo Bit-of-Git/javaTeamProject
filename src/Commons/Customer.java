@@ -124,7 +124,7 @@ public class Customer implements Users {
 	}
 	
 	public String getSecurityQ2() {
-		return securityQ;
+		return securityQ2;
 	}
 	public void setSecurityQ2(String securityQ2) {
 		this.securityQ2 = securityQ2;
@@ -132,7 +132,7 @@ public class Customer implements Users {
 	
 	
 	public String getSecurityA2() {
-		return securityA;
+		return securityA2;
 	}
 	public void setSecurityA2(String securityA2) {
 		this.securityA2 = securityA2;
