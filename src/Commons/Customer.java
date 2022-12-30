@@ -10,12 +10,14 @@ public class Customer implements Users {
 	protected int zip;
 	protected String country;
 	protected String email;
-	protected String securityQ;
-	protected String securityA;
+	protected String securityQ1;
+	protected String securityA1;
+	protected String securityQ2;
+	protected String securityA2;
 	protected int ssn;
 	//constructors for customers and then for admins
 	public Customer(String firstName, String lastName, String username, String password, String address, String state, 
-			int zip, String country, String email, String securityQ, String securityA, int SSN) {
+			int zip, String country, String email, String securityQ1, String securityA1, String securityQ2, String securityA2,int SSN) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -26,8 +28,10 @@ public class Customer implements Users {
 		this.zip = zip;
 		this.country = country;
 		this.email = email;
-		this.securityQ = securityQ;
-		this.securityA = securityA;
+		this.securityQ1 = securityQ1;
+		this.securityA1 = securityA1;
+		this.securityQ2 = securityQ2;
+		this.securityA2 = securityA2;
 		this.ssn = SSN;	
 	}
 	
@@ -104,22 +108,35 @@ public class Customer implements Users {
 	}
 	
 	
-	public String getSecurityQ() {
+	public String getSecurityQ1() {
+		return securityQ1;
+	}
+	public void setSecurityQ1(String securityQ1) {
+		this.securityQ1 = securityQ1;
+	}
+	
+	
+	public String getSecurityA1() {
+		return securityA1;
+	}
+	public void setSecurityA1(String securityA1) {
+		this.securityA1 = securityA1;
+	}
+	
+	public String getSecurityQ2() {
 		return securityQ;
 	}
-	public void setSecurityQ(String securityQ) {
-		this.securityQ = securityQ;
+	public void setSecurityQ2(String securityQ2) {
+		this.securityQ2 = securityQ2;
 	}
 	
 	
-	public String getSecurityA() {
+	public String getSecurityA2() {
 		return securityA;
 	}
-	public void setSecurityA(String securityA) {
-		this.securityA = securityA;
+	public void setSecurityA2(String securityA2) {
+		this.securityA2 = securityA2;
 	}
-	
-	
 	public int getSSN() {
 		return ssn;
 	}
