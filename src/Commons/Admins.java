@@ -16,10 +16,10 @@ public class Admins extends Customer{
 		this.zip = zip;
 		this.country = country;
 		this.email = email;
-		this.securityQ = securityQ1;
-		this.securityA = securityA1;
-		this.securityQ = securityQ2;
-		this.securityA = securityA2;
+		this.securityQ1 = securityQ1;
+		this.securityA1 = securityA1;
+		this.securityQ2 = securityQ2;
+		this.securityA2 = securityA2;
 		this.ssn = SSN;
 		}
 }
