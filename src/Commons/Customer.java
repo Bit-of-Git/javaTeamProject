@@ -1,6 +1,6 @@
 package Commons;
 
-public class Customer implements Users {
+public class Customer extends Users {
 	protected String firstName;
 	protected String lastName;
 	protected static String username;
