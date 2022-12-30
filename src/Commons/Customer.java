@@ -30,6 +30,7 @@ public class Customer implements Users {
 		this.securityA = securityA;
 		this.ssn = SSN;	
 	}
+	
 	//get and set everything
 	public String getFirstName() {
 		return firstName;

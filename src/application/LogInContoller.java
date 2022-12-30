@@ -31,7 +31,13 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+
+import Commons.Customer;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
@@ -92,7 +98,7 @@ public class LogInContoller {
 	//handles what happens with login should get string from text field checks database if correct
 	
 	public void handleLoginClickPopup(ActionEvent event) {
-		boolean login;
+		boolean login = false;
 		String user = TextFieldUser1.getText();
 		String pass = TextFieldPassword1.getText();
 		
@@ -101,19 +107,54 @@ public class LogInContoller {
 		String sqlUserNamer;
 		String sqlPassword;
 		
+		ObservableList<String> custU = FXCollections.observableArrayList("");
+		ObservableList<String> custP = FXCollections.observableArrayList("");
+		ObservableList<String> clogU = FXCollections.observableArrayList(user);
+		ObservableList<String> clogP = FXCollections.observableArrayList(pass);
+		//String custU;
+		//String custP;
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			String SQL = "SELECT * FROM Customers";
+			ResultSet rs = st.executeQuery(SQL);
+			
+			while (rs.next()) {
+				custU.addAll(new String(rs.getObject(2).toString()));
+				custP.addAll(new String(rs.getObject(3).toString()));
+			
+				
+				
+				if (custU.containsAll(clogU) && custP.containsAll(clogP)) {
+					System.out.println("login SUCCESS");
+					login = true;
+					break;
+				}
+			}
+			
+			
+			
+		} catch (Exception ex) {
+			System.out.println("oof");
+			
+		}
+		
 		sqlUserNamer = "";
 		sqlPassword = "";
 		
-		login = false;
-		customerUser = "HelloWorld";
+		//login = false;
+		//customerUser = "HelloWorld";
 		
-		admin = true;
-		
+		admin = false;
+		/*
 		if(user.equals(sqlUserNamer) && pass.equals(sqlPassword)) {
 			login = true;
 		}
-		
-		System.out.println(user);
+		*/
+		//System.out.println(user);
 		
 		
 		if(login) {

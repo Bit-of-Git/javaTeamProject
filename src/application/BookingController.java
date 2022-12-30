@@ -30,6 +30,10 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -82,7 +86,7 @@ public class BookingController implements Initializable{
 		boolean start = true;
 		numFlights = 100;
 		
-		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		ObservableList<Flight> flightz = FXCollections.observableArrayList();
 		
 		//numRows = length of SQL query for initial data
 		
@@ -94,7 +98,7 @@ public class BookingController implements Initializable{
 		}
 		*/
 		
-		for(int i = 0; i < numFlights; i++) {
+		/*for(int i = 0; i < numFlights; i++) {
 			if(i == 0){
 				flightIDVar = i;
 				flightNumVar = (int)(Math.random() + 1) * 1000;
@@ -129,12 +133,32 @@ public class BookingController implements Initializable{
 				leavingTimeVar = "14:00";
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			}
-		}
+		}*/
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			String SQL = "SELECT * FROM flightinfo";
+			ResultSet rs = st.executeQuery(SQL);
+			
+			
+			while(rs.next()) {
+				flightz.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
+						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
+						rs.getInt(9), rs.getDouble(10)));
+			}
+			
+			
+			} catch (Exception e) {
+				System.out.println("oof");
+			}
+			return flightz;
 		
 		//Delete below and use for loop in tandem with sql query
 
-		flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
-		return flights;
+		//flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
+		//return flights;
 	}
 	
 	public void handleDelete(ActionEvent event){

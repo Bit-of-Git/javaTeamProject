@@ -32,6 +32,9 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -104,6 +107,35 @@ public class RegistrationController implements Initializable{
 	public void registrationHandler(ActionEvent event) {
 		
 		if(true) {
+			
+				try {
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+				 
+				 Connection con = DriverManager.getConnection(conURL); 
+					 //code 
+				PreparedStatement stmt = con.prepareStatement("INSERT INTO Customers(CusUserName, CusPassword, CusFirstName, CusLastName, CusAddress, CusZip, CusState, CusEmail, CusQuestion, CusAnswer, CusSSN) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+					 
+				stmt.setString(1, user.getText());
+				stmt.setString(2, pass.getText());
+				stmt.setString(3, first.getText());
+				stmt.setString(4, last.getText());
+				stmt.setString(5, adress.getText());
+				stmt.setString(6, zip.getText());
+				stmt.setString(7, state.getText());
+				stmt.setString(8, email.getText());
+				stmt.setString(9, securityQuestion.getPromptText());
+				stmt.setString(10, answer.getText());
+				stmt.setString(11, ssn.getText());
+		
+				stmt.execute();
+				
+				
+				
+				} catch (Exception e) {
+					System.out.println("oof");
+				}
 			//return all of these elements to sql database
 			/*
 			 * (String)securityQuestion.getValue()
