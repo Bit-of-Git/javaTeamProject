@@ -28,6 +28,8 @@ import javafx.geometry.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.IOException;
+import java.lang.reflect.Array;
+
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
@@ -121,7 +123,7 @@ public class AccountController implements Initializable{
 			
 			
 			while(rs.next()) {
-				flights.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
+				flights.add(new Flight(rs.getObject(6).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
 						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
 						rs.getInt(9), rs.getDouble(10)));
 			}
@@ -191,7 +193,7 @@ public class AccountController implements Initializable{
 			
 			
 			while(rs.next()) {
-				flights.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
+				flights.add(new Flight(rs.getObject(6).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
 						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
 						rs.getInt(9), rs.getDouble(10)));
 			}
@@ -468,7 +470,7 @@ public class AccountController implements Initializable{
 		        	} else {
 		        	
 		        		switchToFlightBooked(event);
-		        		/*try {
+		        		try {
 		    				
 		    				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		    				 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
@@ -484,9 +486,9 @@ public class AccountController implements Initializable{
 		    				while(rs.next()) {
 		    					BookID.addAll(new String(rs.getObject(1).toString()));
 		    				}
-		    				BookID.toArray();
-		    				int x = BookID
-		    				int count = 
+		    				
+		    				int x = BookID.size();
+		    				int count = x + 1;
 		    				
 		    				String c = String.valueOf(count);
 		    				
@@ -503,7 +505,7 @@ public class AccountController implements Initializable{
 		    					System.out.println(e);
 		    				}
 		    			
-		    		*/}
+		    		}
 			        	//use following getters to create a row in SQL returning got values
 			        	// remember cost is a double type treat accordingly
 			        	
