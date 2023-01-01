@@ -171,6 +171,10 @@ public class LogInContoller {
 		}
 		*/
 		//System.out.println(user);
+		if(TextFieldUser1.getText().isEmpty()) {
+    		login = false;
+    		admin = false;
+    	}
 		
 		
 		if(login) {

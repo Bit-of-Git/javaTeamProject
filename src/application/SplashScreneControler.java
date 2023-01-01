@@ -174,7 +174,10 @@ public class SplashScreneControler extends LogInContoller implements Initializab
 		
 		//admin = false;
 		
-		
+		if(TextFieldUser.getText().isEmpty()) {
+    		login = false;
+    		admin = false;
+    	}
 		
 		if(login) {
 			try{
