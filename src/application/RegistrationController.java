@@ -69,11 +69,11 @@ public class RegistrationController implements Initializable{
 	private boolean admin = false;
 	
 	public void initialize(URL url, ResourceBundle rb) {
-		String selec1 = "option";
-		String selec2 = "option"; 
-		String selec3 = "option";
-		String selec4 = "option"; 
-		String selec5 = "option";
+		String selec1 = "Favorite Food";
+		String selec2 = "Favorite Color"; 
+		String selec3 = "Favorite Song";
+		String selec4 = "Favorite Number"; 
+		String selec5 = "Favorite Drink";
 		
 		//selec 1 I'm making mandatory since it makes coding easier
 
@@ -153,6 +153,19 @@ public class RegistrationController implements Initializable{
 					
 					if(admU.contains(u)) {
 						count = 1;
+						try {
+							FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("UsernameTaken.fxml"));
+							Parent root1 = (Parent) fxmlLoader1.load();
+							Stage stage1 = new Stage();
+							stage1.setScene(new Scene(root1)); 
+							stage1.setResizable(false);
+							stage1.initModality(Modality.APPLICATION_MODAL);
+							stage1.show();
+							
+						} catch(Exception e) {
+							System.out.println("Shux");
+						}
+
 						System.out.println("Username taken");
 						break;
 					}
