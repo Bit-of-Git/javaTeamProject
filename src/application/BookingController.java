@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Application;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -39,7 +40,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import java.util.ArrayList;
-
+import java.sql.*;
 
 
 public class BookingController implements Initializable{
@@ -86,9 +87,51 @@ public class BookingController implements Initializable{
 		boolean start = true;
 		numFlights = 100;
 		
-		ObservableList<Flight> flightz = FXCollections.observableArrayList();
 		
-		return flightz;
+		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		ObservableList<String> flID = FXCollections.observableArrayList();
+		ObservableList<String> flU = FXCollections.observableArrayList();
+		ObservableList<String> cflightID = FXCollections.observableArrayList();
+		ObservableList<String> cflightU = FXCollections.observableArrayList();
+		ObservableList<Flight> finalFlights = FXCollections.observableArrayList();
+		
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			
+				
+				String SQL2 = "SELECT * from FlightInfo JOIN Booking on FlightInfo.flightID = Booking.FlightID";
+				ResultSet rs2 = st.executeQuery(SQL2);
+				
+				
+				while(rs2.next()) {
+					cflightU.add(new String(rs2.getObject(13).toString()));
+					System.out.println(flights);
+					System.out.println(cflightU);
+					System.out.println(rs2.getObject(6).toString());
+					if(cflightU.contains(customerUser)) {
+						finalFlights.add(new Flight(rs2.getObject(6).toString(), rs2.getObject(7).toString(), rs2.getObject(4).toString(), rs2.getObject(5).toString(), 
+								rs2.getObject(3).toString(), rs2.getInt(1), rs2.getInt(2), 
+								rs2.getInt(9), rs2.getDouble(10)));
+						
+					}
+					flights.clear();
+					cflightU.clear();
+				}	
+				
+			
+			
+			
+			} catch (Exception e) {
+				System.out.println("oof");
+				System.out.println(e);
+			}
+		
+		return finalFlights;
+		
 		
 		//numRows = length of SQL query for initial data
 		

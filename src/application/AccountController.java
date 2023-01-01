@@ -488,12 +488,12 @@ public class AccountController implements Initializable{
 		    				}
 		    				
 		    				int x = BookID.size();
-		    				int count = x + 1;
+		    				int count = x;
 		    				
 		    				String c = String.valueOf(count);
 		    				
 		    				stmt.setString(1, c);
-		    				stmt.setString(2, flightIDText.getText());
+		    				stmt.setInt(2, flight.getFlightID());
 		    				stmt.setString(3, customerUser);
 		    				
 		    				stmt.execute();
@@ -614,7 +614,7 @@ public class AccountController implements Initializable{
 	public void initData(String customer, boolean admin1) {
 		customerUser = customer;
 		admin = admin1;
-		System.out.println(admin);
+		//System.out.println(admin);
 		
 		//We need the customer ID, check for whether admin or not
 
