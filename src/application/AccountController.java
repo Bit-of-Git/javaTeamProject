@@ -667,6 +667,8 @@ public class AccountController implements Initializable{
 		
 		if(adminSelections.getValue().equals("Delete")) {
 		    {
+		    	int x = 0;
+		    	try {
 		        ObservableList<Flight> selectedRows, allFlights;
 		        allFlights = tableView.getItems();
 		        
@@ -674,15 +676,30 @@ public class AccountController implements Initializable{
 		        selectedRows = tableView.getSelectionModel().getSelectedItems();
 		        
 		        //loop over the selected rows and remove the Person objects from the table
-		        for (Flight flight: selectedRows)
-		        {
-		        	allFlights.remove(flight);
+		        for (Flight flight: selectedRows){
+		        	
+		        x = flight.getFlightID();
 		        }
+		        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+
+				Connection con = DriverManager.getConnection(conURL); 
+					 //code 
+		        PreparedStatement stmt = con.prepareStatement("DELETE FROM FlightInfo WHERE flightID = " + x);
+		        stmt.executeUpdate();
+
+
+
+		        }catch(Exception e){
+		        	System.out.println();
+		        }
+
 		    }
+		    }
+	}
 		    
-		    
-		}
-	} 
+		
+	
 
 	public void initData(String customer, boolean admin1) {
 		customerUser = customer;
