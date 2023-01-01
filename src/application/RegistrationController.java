@@ -35,6 +35,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -106,7 +108,11 @@ public class RegistrationController implements Initializable{
 	//method for the submit registration button
 	public void registrationHandler(ActionEvent event) {
 		
-		if(true) {
+		if(admin == false) {
+			ObservableList<String> admU = FXCollections.observableArrayList("");
+			
+			int count = 0;
+			
 			
 				try {
 				
@@ -115,7 +121,9 @@ public class RegistrationController implements Initializable{
 				 
 				 Connection con = DriverManager.getConnection(conURL); 
 					 //code 
-				PreparedStatement stmt = con.prepareStatement("INSERT INTO Customers(CusUserName, CusPassword, CusFirstName, CusLastName, CusAddress, CusZip, CusState, CusEmail, CusQuestion, CusAnswer, CusSSN) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+				PreparedStatement stmt = con.prepareStatement("INSERT INTO Customers(CusUsername, CusPassword, CusFirstName, CusLastName, CusAddress, CusZip, CusState, CusEmail, CusSSN, CusQ1, CusQ2, CusA1, CusA2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				
+				
 					 
 				stmt.setString(1, user.getText());
 				stmt.setString(2, pass.getText());
@@ -125,16 +133,37 @@ public class RegistrationController implements Initializable{
 				stmt.setString(6, zip.getText());
 				stmt.setString(7, state.getText());
 				stmt.setString(8, email.getText());
-				stmt.setString(9, securityQuestion.getPromptText());
-				stmt.setString(10, answer.getText());
-				stmt.setString(11, ssn.getText());
-		
-				stmt.execute();
+				stmt.setString(9, ssn.getText());
+				stmt.setString(10, securityQuestion.getPromptText());
+				stmt.setString(11, securityQuestion2.getPromptText());
+				stmt.setString(12, answer.getText());
+				stmt.setString(13, answer2.getText());
 				
+				
+				Statement st2 = con.createStatement();
+				String sqlAdm = "SELECT * FROM Admin";
+				ResultSet AdmRS = st2.executeQuery(sqlAdm);
+				
+				while(AdmRS.next()) {
+					admU.addAll(new String(AdmRS.getObject(2).toString()));
+					
+					String u = "";
+					
+					u = user.getText();
+					
+					if(admU.contains(u)) {
+						count = 1;
+						System.out.println("Username taken");
+						break;
+					}
+				}
+				if (count == 0) {
+				stmt.execute();
+				}
 				
 				
 				} catch (Exception e) {
-					System.out.println("oof");
+					System.out.println(e);
 				}
 			//return all of these elements to sql database
 			/*
@@ -153,10 +182,44 @@ public class RegistrationController implements Initializable{
 			 * ssn.getText();
 			 */
 			backToMainHandler(event);
-			System.out.println(admin);
+			
+		}
+		if (admin == true) {
+			try {
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+				 
+				 Connection con = DriverManager.getConnection(conURL); 
+					 //code 
+				PreparedStatement stmt = con.prepareStatement("INSERT INTO Admin(AdmUsername, AdmPassword, AdmFirstName, AdmLastName, AdmAddress, AdmZip, AdmState, AdmEmail, AdmSSN, AdmQ1, AdmQ2, AdmA1, AdmA2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					 
+				stmt.setString(1, user.getText());
+				stmt.setString(2, pass.getText());
+				stmt.setString(3, first.getText());
+				stmt.setString(4, last.getText());
+				stmt.setString(5, adress.getText());
+				stmt.setString(6, zip.getText());
+				stmt.setString(7, state.getText());
+				stmt.setString(8, email.getText());
+				stmt.setString(9, ssn.getText());
+				stmt.setString(10, securityQuestion.getPromptText());
+				stmt.setString(11, securityQuestion2.getPromptText());
+				stmt.setString(12, answer.getText());
+				stmt.setString(13, answer2.getText());
+		
+				stmt.execute();
+				backToMainHandler(event);
+				
+				
+				} catch (Exception e) {
+					System.out.println("oof");
+				}
+			
 		}
 		
 	}
+	
 	
 	public void switchToAdminLogin(ActionEvent event) {
 		try {
