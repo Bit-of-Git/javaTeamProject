@@ -205,6 +205,7 @@ public class BookingController implements Initializable{
 	        stmt.executeUpdate();
 	        }catch(Exception e) {
 	        	System.out.println();
+	        	
 	        }
 	    }
 	

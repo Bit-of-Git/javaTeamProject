@@ -459,20 +459,67 @@ public class AccountController implements Initializable{
 		        //this gives us the rows that were selected
 		        selectedRows = tableView.getSelectionModel().getSelectedItems();
 		        
+		        
+		        String date = "";
+		        ObservableList<String> cflightU = FXCollections.observableArrayList();
+				ObservableList<Flight> finalFlights = FXCollections.observableArrayList();
+				ObservableList<Flight> flights = FXCollections.observableArrayList();
+				ObservableList<String> fID = FXCollections.observableArrayList();
+		        
+		        try {
+		        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+				Connection con = DriverManager.getConnection(conURL);
+				Statement st1 = con.createStatement();
+				
+				
+				
+				
+				
+				String SQL2 = "SELECT * from FlightInfo JOIN Booking on FlightInfo.flightID = Booking.FlightID";
+				ResultSet rs2 = st1.executeQuery(SQL2);
+				
+				
+				while(rs2.next()) {
+					cflightU.add(new String(rs2.getObject(13).toString()));
+					
+ 					if(cflightU.contains(customerUser)) {
+						finalFlights.add(new Flight(rs2.getObject(6).toString(), rs2.getObject(7).toString(), rs2.getObject(4).toString(), rs2.getObject(5).toString(), 
+								rs2.getObject(3).toString(), rs2.getInt(1), rs2.getInt(2), 
+								rs2.getInt(9), rs2.getDouble(10)));
+						fID.add(new String(rs2.getObject(1).toString()));
+						
+						
+					}
+					flights.clear();
+					cflightU.clear();
+				}	
+				
 		        //loop over the selected rows
 		        for (Flight flight: selectedRows)
 		        {
-
+		        	int ID = flight.getFlightID();
+		        	String IDr;
+		        	IDr = Integer.toString(ID);
+		        	
+		        	
+		        	
+		        	
+		        	
 		        	if(flight.getCapacity() == 0) {
 		        		try{
 		        			switchToError(event);
 		        		} catch(IOException ex) {
 		        			
 		        		}
-		        	} else if(false) {
+		        	} else if(fID.contains(IDr)) {
+		        		
 		        		
 		        		//get all flight ids run a loop and see if the flight ID is equal to any of those in the query may use below line
 		        		// if(!flight.getFlightID().equals(sql query))
+		        		
+		        		
+		        		
 		        		switchToOverlap(event);
 		        		
 		        	} else {
@@ -480,10 +527,7 @@ public class AccountController implements Initializable{
 		        		switchToFlightBooked(event);
 		        		try {
 		    				
-		    				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		    				 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-		    				 
-		    				 Connection con = DriverManager.getConnection(conURL); 
+		    				
 		    					 //code 
 		    				PreparedStatement stmt = con.prepareStatement("INSERT INTO Booking(BookID, flightID, Username) VALUES (?,?,?)");
 		    				
@@ -530,9 +574,11 @@ public class AccountController implements Initializable{
 		        		
 		        	}
 
+		        }catch(Exception e) {
+		        	
 		        }
-		    
-		    
+		}
+		
 		    
 		
 		
