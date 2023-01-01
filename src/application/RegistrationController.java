@@ -222,6 +222,20 @@ public class RegistrationController implements Initializable{
 				stmt.setString(13, answer2.getText());
 		
 				stmt.execute();
+				
+				try {
+					FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("AccountRegistered.fxml"));
+					Parent root1 = (Parent) fxmlLoader1.load();
+					Stage stage1 = new Stage();
+					stage1.setScene(new Scene(root1)); 
+					stage1.setResizable(false);
+					stage1.initModality(Modality.APPLICATION_MODAL);
+					stage1.show();
+					
+				} catch(Exception e) {
+					System.out.println("Shux");
+				}
+				
 				backToMainHandler(event);
 				
 				
