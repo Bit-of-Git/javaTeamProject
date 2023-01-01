@@ -14,7 +14,7 @@
    <children>
       <HBox prefHeight="78.0" prefWidth="854.0">
          <children>
-            <TextField fx:id="TextFieldPassword" promptText="Password">
+            <TextField fx:id="TextFieldUser" promptText="Username">
                <font>
                   <Font size="20.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="TextFieldUser" promptText="Username">
+            <TextField fx:id="TextFieldPassword" promptText="Password">
                <font>
                   <Font size="20.0" />
                </font>
