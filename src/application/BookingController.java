@@ -200,9 +200,17 @@ public class BookingController implements Initializable{
 			 
 			Connection con = DriverManager.getConnection(conURL); 
 				 //code 
-			
-	        PreparedStatement stmt = con.prepareStatement("delete from booking where (FlightID =" + x + ") AND (username = '" + customerUser + "')");
+			PreparedStatement stmt = con.prepareStatement("delete from booking where (FlightID =" + x + ") AND (username = '" + customerUser + "')");
 	        stmt.executeUpdate();
+			/*String y = String.valueOf(x);
+	        PreparedStatement stmt = con.prepareStatement("DELETE FROM Booking WHERE FlightID = ? AND Username = '?'");
+	        
+	        stmt.setString(1, y);
+	        String cu = customerUser.toString();
+	        System.out.println(y + cu);
+	        stmt.setString(2, cu);
+	        
+	        stmt.executeUpdate();*/
 	        }catch(Exception e) {
 	        	System.out.println();
 	        	
