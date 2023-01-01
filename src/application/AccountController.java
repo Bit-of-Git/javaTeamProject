@@ -340,7 +340,7 @@ public class AccountController implements Initializable{
     			counter1 = 0;
                 for (Flight flight: flights0) {
                 	
-                	if(formattedDate.toString().equalsIgnoreCase(flight.getDay())) { 
+                	if(formattedDate.toString().replace("-", " ").equalsIgnoreCase(flight.getDay().replace(",", "").replace(".", ""))) { 
 
                 	} else {
                 		counter.add(counter1);

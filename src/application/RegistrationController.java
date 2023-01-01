@@ -216,8 +216,8 @@ public class RegistrationController implements Initializable{
 				stmt.setString(7, state.getText());
 				stmt.setString(8, email.getText());
 				stmt.setString(9, ssn.getText());
-				stmt.setString(10, securityQuestion.getPromptText());
-				stmt.setString(11, securityQuestion2.getPromptText());
+				stmt.setString(10, securityQuestion.getValue().toString());
+				stmt.setString(11, securityQuestion2.getValue().toString());
 				stmt.setString(12, answer.getText());
 				stmt.setString(13, answer2.getText());
 		
