@@ -69,7 +69,7 @@ public class BookingController implements Initializable{
 		arriveTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String> ("arriveTime"));
 		leavingTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String> ("leavingTime"));
 		
-		tableView.setItems(getFlights());
+
 		
 	}
 	
@@ -112,7 +112,7 @@ public class BookingController implements Initializable{
 					System.out.println(flights);
 					System.out.println(cflightU);
 					System.out.println(rs2.getObject(6).toString());
-					if(cflightU.contains(customerUser)) {
+ 					if(cflightU.contains(customerUser)) {
 						finalFlights.add(new Flight(rs2.getObject(6).toString(), rs2.getObject(7).toString(), rs2.getObject(4).toString(), rs2.getObject(5).toString(), 
 								rs2.getObject(3).toString(), rs2.getInt(1), rs2.getInt(2), 
 								rs2.getInt(9), rs2.getDouble(10)));
@@ -248,6 +248,8 @@ public class BookingController implements Initializable{
 	public void initData(String customer, boolean admin1) {
 		customerUser = customer;
 		admin = admin1;
+		
+		tableView.setItems(getFlights());
 	}
 	    
 	    
