@@ -276,6 +276,7 @@ public class AccountController implements Initializable{
         		}
                 start = false;
     		} else {
+    			counter.clear();
         		counter1 = 0;
                 for (Flight flight: flights0) {
                 	if(location.getText().equalsIgnoreCase(flight.getFrom())) { 
@@ -304,6 +305,7 @@ public class AccountController implements Initializable{
         		}
                 start = false;
     		} else {
+    			counter.clear();
         		counter1 = 0;
                 for (Flight flight: flights0) {
                 	if(destination.getText().equalsIgnoreCase(flight.getTo())) { 
@@ -325,15 +327,16 @@ public class AccountController implements Initializable{
     		dateBoolean = false;
     	} else {
 			date = datePicker.getValue();
-			formattedDate = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+			formattedDate = date.format(DateTimeFormatter.ofPattern("MMM-dd-yyyy"));
     		if(start) {
                 for (Flight flight: flights) {
-                	if(formattedDate.toString().equalsIgnoreCase(flight.getDay())) { 
+                	if(formattedDate.toString().replace("-", " ").equalsIgnoreCase(flight.getDay().replace(",", "").replace(".", ""))) { 
                 		flights0.add(flight);
                 	} 
         		}
                 start = false;
     		} else {
+    			counter.clear();
     			counter1 = 0;
                 for (Flight flight: flights0) {
                 	
@@ -363,6 +366,7 @@ public class AccountController implements Initializable{
         		}
                 start = false;
     		} else {
+    			counter.clear();
     			counter1 = 0;
                 for (Flight flight: flights0) {
                 	if(departureTime.getText().equalsIgnoreCase(flight.getLeavingTime())) { 
@@ -401,6 +405,7 @@ public class AccountController implements Initializable{
         		}
                 start = false;
     		} else {
+    			counter.clear();
     			counter1 = 0;
                 for (Flight flight: flights0) {
                 	flightIDVar = -1;
