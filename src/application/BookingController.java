@@ -191,7 +191,6 @@ public class BookingController implements Initializable{
 	        //loop over the selected rows and remove the Person objects from the table
 	        for (Flight flight: selectedRows)
 	        {
-	        	allFlights.remove(flight);
 	        	x = flight.getFlightID();
 	        }
 	        try {
@@ -202,6 +201,11 @@ public class BookingController implements Initializable{
 				 //code 
 			PreparedStatement stmt = con.prepareStatement("delete from booking where (FlightID =" + x + ") AND (username = '" + customerUser + "')");
 	        stmt.executeUpdate();
+
+	        for (Flight flight: selectedRows)
+	        {
+	        	allFlights.remove(flight);
+	        }
 			/*String y = String.valueOf(x);
 	        PreparedStatement stmt = con.prepareStatement("DELETE FROM Booking WHERE FlightID = ? AND Username = '?'");
 	        

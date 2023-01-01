@@ -56,7 +56,7 @@ public class ResetPasswordController extends LogInContoller implements Initializ
 	public String sqlSecurityQuestion;
 	public String password1;
 	public String password2;
-	public String selec1 = "option";
+	public String selec1 = "Favorite Food";
 	
 	@FXML private ComboBox securityQuestion;
 	
