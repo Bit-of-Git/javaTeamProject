@@ -327,10 +327,10 @@ public class AccountController implements Initializable{
     		dateBoolean = false;
     	} else {
 			date = datePicker.getValue();
-			formattedDate = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+			formattedDate = date.format(DateTimeFormatter.ofPattern("MMM-dd-yyyy"));
     		if(start) {
                 for (Flight flight: flights) {
-                	if(formattedDate.toString().equalsIgnoreCase(flight.getDay())) { 
+                	if(formattedDate.toString().replace("-", " ").equalsIgnoreCase(flight.getDay().replace(",", "").replace(".", ""))) { 
                 		flights0.add(flight);
                 	} 
         		}
