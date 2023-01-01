@@ -88,6 +88,8 @@ public class BookingController implements Initializable{
 		
 		ObservableList<Flight> flightz = FXCollections.observableArrayList();
 		
+		return flightz;
+		
 		//numRows = length of SQL query for initial data
 		
 		//use loop to add values use sql query in loop to set vars
@@ -134,26 +136,7 @@ public class BookingController implements Initializable{
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			}
 		}*/
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-			Connection con = DriverManager.getConnection(conURL);
-			Statement st = con.createStatement();
-			String SQL = "SELECT * FROM flightinfo";
-			ResultSet rs = st.executeQuery(SQL);
-			
-			
-			while(rs.next()) {
-				flightz.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
-						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
-						rs.getInt(9), rs.getDouble(10)));
-			}
-			
-			
-			} catch (Exception e) {
-				System.out.println("oof");
-			}
-			return flightz;
+		
 		
 		//Delete below and use for loop in tandem with sql query
 

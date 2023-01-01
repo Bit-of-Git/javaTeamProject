@@ -31,6 +31,11 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -100,10 +105,32 @@ public class AccountController implements Initializable{
 	}
 	
 	public ObservableList<Flight> getFlights(){
-		int numRows;
+		//int numRows;
 		
 		
-		numRows = 10;
+		//numRows = 10;
+		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			String SQL = "SELECT * FROM flightinfo";
+			ResultSet rs = st.executeQuery(SQL);
+			
+			
+			while(rs.next()) {
+				flights.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
+						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
+						rs.getInt(9), rs.getDouble(10)));
+			}
+			
+			
+			} catch (Exception e) {
+				System.out.println("oof");
+			}
+			return flights;
 		//numRows = length of SQL query for initial data
 		
 		//use loop to add values use sql query in loop to set vars
@@ -115,7 +142,7 @@ public class AccountController implements Initializable{
 		*/
 
 		
-		int flightIDVar = 1;
+	/*	int flightIDVar = 1;
 		int flightNumVar = 1;
 		int capacityVar = 1;
 		double costVar = 1;
@@ -127,7 +154,7 @@ public class AccountController implements Initializable{
 		//Delete below and use for loop in tandem with sql query
 		ObservableList<Flight> flights = FXCollections.observableArrayList();
 		flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
-		return flights;
+		return flights;*/
 	}
 	
 	public void search(ActionEvent event) {
@@ -152,6 +179,27 @@ public class AccountController implements Initializable{
 		numFlights = 10;
 		LocalDate date; 
 		String formattedDate;
+		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			String SQL = "SELECT * FROM flightinfo";
+			ResultSet rs = st.executeQuery(SQL);
+			
+			
+			while(rs.next()) {
+				flights.add(new Flight(rs.getObject(5).toString(), rs.getObject(7).toString(), rs.getObject(4).toString(), rs.getObject(5).toString(), 
+						rs.getObject(3).toString(), rs.getInt(1), rs.getInt(2), 
+						rs.getInt(9), rs.getDouble(10)));
+			}
+			
+			
+			} catch (Exception e) {
+				System.out.println("oof");
+			}
 		
 		
 		//get all dta entries from sql place all entries in folloing variables and usd place in observable list using below function
@@ -169,7 +217,7 @@ public class AccountController implements Initializable{
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 		 */
 		
-		ObservableList<Flight> flights = FXCollections.observableArrayList();
+		//ObservableList<Flight> flights = FXCollections.observableArrayList();
 		ArrayList<Flight> flights0 = new ArrayList<>();
 		ObservableList<Flight> flights1 = FXCollections.observableArrayList();
 		boolean locationBoolean = true;
@@ -178,7 +226,7 @@ public class AccountController implements Initializable{
 		boolean dateBoolean = true;
 		boolean idSearchBoolean = true;
 		
-		for(int i = 0; i < numFlights; i++) {
+		/*for(int i = 0; i < numFlights; i++) {
 			if(i == 0){
 				flightIDVar = i;
 				flightNumVar = (int)(Math.random() + 1) * 1000;
@@ -213,7 +261,7 @@ public class AccountController implements Initializable{
 				leavingTimeVar = "14:00";
 				flights.add(new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar));
 			}
-		}
+		}*/
 		
     	if(location.getText().isEmpty()) {
     		locationBoolean = false;
@@ -420,6 +468,42 @@ public class AccountController implements Initializable{
 		        	} else {
 		        	
 		        		switchToFlightBooked(event);
+		        		/*try {
+		    				
+		    				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		    				 String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+		    				 
+		    				 Connection con = DriverManager.getConnection(conURL); 
+		    					 //code 
+		    				PreparedStatement stmt = con.prepareStatement("INSERT INTO Booking(BookID, flightID, Username) VALUES (?,?,?)");
+		    				
+		    				Statement st = con.createStatement();
+		    				String SQL = "SELECT * FROM Booking";
+		    				ResultSet rs = st.executeQuery(SQL);
+		    				ObservableList<String> BookID = FXCollections.observableArrayList("");
+		    				while(rs.next()) {
+		    					BookID.addAll(new String(rs.getObject(1).toString()));
+		    				}
+		    				BookID.toArray();
+		    				int x = BookID
+		    				int count = 
+		    				
+		    				String c = String.valueOf(count);
+		    				
+		    				stmt.setString(1, c);
+		    				stmt.setString(2, flightIDText.getText());
+		    				stmt.setString(3, customerUser);
+		    				
+		    				stmt.execute();
+		    				
+		    				
+		    				
+		    				} catch (Exception e) {
+		    					System.out.println("oof");
+		    					System.out.println(e);
+		    				}
+		    			
+		    		*/}
 			        	//use following getters to create a row in SQL returning got values
 			        	// remember cost is a double type treat accordingly
 			        	
@@ -431,12 +515,13 @@ public class AccountController implements Initializable{
 			        	flight.getArriveTime()
 			        	flight.getTo()
 			        	flight.getFrom()
-			        	flight.getDay()
-						*/
+			        	flight.getDay()*/
+						
+		        		
 		        	}
 
 		        }
-		    }
+		    
 		    
 		    
 		
