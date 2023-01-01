@@ -113,6 +113,8 @@ public class LogInContoller {
 		ObservableList<String> custP = FXCollections.observableArrayList("");
 		ObservableList<String> clogU = FXCollections.observableArrayList(user);
 		ObservableList<String> clogP = FXCollections.observableArrayList(pass);
+		ObservableList<String> admU = FXCollections.observableArrayList("");
+		ObservableList<String> admP = FXCollections.observableArrayList("");
 		//String custU;
 		//String custP;
 		
@@ -124,10 +126,14 @@ public class LogInContoller {
 			String SQL = "SELECT * FROM Customers";
 			ResultSet rs = st.executeQuery(SQL);
 			
+			Statement st2 = con.createStatement();
+			String sqlAdm = "SELECT * FROM Admin";
+			ResultSet AdmRS = st2.executeQuery(sqlAdm);
+			
 			while (rs.next()) {
 				custU.addAll(new String(rs.getObject(2).toString()));
 				custP.addAll(new String(rs.getObject(3).toString()));
-				
+			
 				
 				
 				if (custU.containsAll(clogU) && custP.containsAll(clogP)) {
@@ -136,23 +142,29 @@ public class LogInContoller {
 					custUser = rs.getObject(2).toString();
 					break;
 				}
+				
 			}
-		
+			while(AdmRS.next()) {
+			admU.addAll(new String(AdmRS.getObject(2).toString()));
+			admP.addAll(new String(AdmRS.getObject(3).toString()));
+			if(admU.containsAll(clogU) && admP.containsAll(clogP)) {
+				System.out.println("Admin login Success");
+				login = true;
+				admin = true;
+				break;
+			}
+			}
 			
 			
 		} catch (Exception ex) {
-			System.out.println("oof");
+			System.out.println(ex);
 			
 		}
-		
-		
-		sqlUserNamer = "";
-		sqlPassword = "";
 		
 		//login = false;
 		//customerUser = "HelloWorld";
 		
-		admin = false;
+		//admin = false;
 		/*
 		if(user.equals(sqlUserNamer) && pass.equals(sqlPassword)) {
 			login = true;

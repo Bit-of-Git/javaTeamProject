@@ -2,6 +2,7 @@ package application;
 
 import javafx.application.Application;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -34,8 +35,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import java.sql.*;
 
-public class SplashScreneControler implements Initializable{
+public class SplashScreneControler extends LogInContoller implements Initializable{
 	
 	ImageView image1;
 
@@ -110,22 +112,52 @@ public class SplashScreneControler implements Initializable{
 	}
 	
 	public void handleLoginClick(ActionEvent event) {
-		boolean login;
+		boolean login = false;
 		user = TextFieldUser.getText();
 		pass = TextFieldPassword.getText();
+		ObservableList<String> custU = FXCollections.observableArrayList("");
+		ObservableList<String> custP = FXCollections.observableArrayList("");
+		ObservableList<String> clogU = FXCollections.observableArrayList(user);
+		ObservableList<String> clogP = FXCollections.observableArrayList(pass);
+		//String custU;
+		//String custP;
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			Connection con = DriverManager.getConnection(conURL);
+			Statement st = con.createStatement();
+			String SQL = "SELECT * FROM Customers";
+			ResultSet rs = st.executeQuery(SQL);
+			
+			while (rs.next()) {
+				custU.addAll(new String(rs.getObject(2).toString()));
+				custP.addAll(new String(rs.getObject(3).toString()));
+				
+				
+				
+				if (custU.containsAll(clogU) && custP.containsAll(clogP)) {
+					System.out.println("login SUCCESS");
+					login = true;
+					custUser = rs.getObject(2).toString();
+					break;
+				}
+			}
+		
+			
+			
+		} catch (Exception ex) {
+			System.out.println("oof");
+			
+		}
 		//we need sql username and password if equals can login
 		
-		String sqlUserName = "abc";
-		String sqlPassword = "1234";
+		//String sqlUserName = "abc";
+		//String sqlPassword = "1234";
 		
 		
 		admin = false;
 		
-		if(user.equals(sqlUserName) && pass.equals(sqlPassword)) {
-			login = true;
-		} else {
-			login = false;
-		}
 		
 		
 		if(login) {
