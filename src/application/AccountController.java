@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Application;
+import java.sql.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -182,7 +183,7 @@ public class AccountController implements Initializable{
 		LocalDate date; 
 		String formattedDate;
 		ObservableList<Flight> flights = FXCollections.observableArrayList();
-		
+	
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
@@ -199,10 +200,12 @@ public class AccountController implements Initializable{
 			}
 			
 			
+			con.close();
+			
 			} catch (Exception e) {
 				System.out.println("oof");
-			}
-		
+			} 
+			
 		
 		//get all dta entries from sql place all entries in folloing variables and usd place in observable list using below function
 		// iterate with wiht loop
@@ -535,7 +538,9 @@ public class AccountController implements Initializable{
 		
 		if(adminSelections.getValue().equals("Add")) {
 			{
-					
+				try {
+				
+				
 				int flightIDVar;
 				int flightNumVar;
 				int capacityVar;
@@ -587,14 +592,36 @@ public class AccountController implements Initializable{
 				arriveTimeVar =  arrivalText.getText();
 				dayVar = dayText.getText();
 				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+					 
+				Connection con = DriverManager.getConnection(conURL); 
+						 //code 
+			    PreparedStatement stmt = con.prepareStatement("Insert INTO flightinfo VALUES (?,?,?,?,?,?,?,?,?,?)");
+			    stmt.setInt(1, flightIDVar);
+			    stmt.setInt(2, flightNumVar);
+			    stmt.setString(3, dayVar);
+			    stmt.setString(4, toVar);
+			    stmt.setString(5, fromVar);
+			    stmt.setString(6, leavingTimeVar);
+			    stmt.setString(7, arriveTimeVar);
+			    stmt.setInt(9, capacityVar);
+			    stmt.setDouble(10, costVar);
+			    stmt.setInt(8, 200);
+			    stmt.executeUpdate();
+				
 				
 		        if(leavingTimeVar !="" && arriveTimeVar !="" && toVar !="" && fromVar !="" && dayVar !="" && flightIDVar !=0 && flightNumVar !=0 && capacityVar !=0 && costVar!=0) {
 			        Flight newFlight = new Flight(leavingTimeVar, arriveTimeVar, toVar, fromVar, dayVar, flightIDVar, flightNumVar, capacityVar, costVar);
 			        tableView.getItems().add(newFlight);
 
 		        }
+		       
 
 		    }
+			 catch (Exception e) {
+				
+			}
 		}
 		
 		if(adminSelections.getValue().equals("Delete")) {
@@ -604,16 +631,36 @@ public class AccountController implements Initializable{
 		        
 		        //this gives us the rows that were selected
 		        selectedRows = tableView.getSelectionModel().getSelectedItems();
+		        int x = 0;
 		        
+		        try {
+		     
+		              
+		        
+				
 		        //loop over the selected rows and remove the Person objects from the table
-		        for (Flight flight: selectedRows)
-		        {
+		        for (Flight flight: selectedRows){
 		        	allFlights.remove(flight);
+		        x = flight.getFlightID();
 		        }
+		        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+				 
+				Connection con = DriverManager.getConnection(conURL); 
+					 //code 
+		        PreparedStatement stmt = con.prepareStatement("DELETE FROM FlightInfo WHERE flightID = " + x);
+		        stmt.executeUpdate();
+		        
+		        
+		        
+		        }catch(Exception e){
+		        	System.out.println();
+		        }
+		        
 		    }
-		    
-		    
 		}
+		}   
+		
 	} 
 
 	public void initData(String customer, boolean admin1) {

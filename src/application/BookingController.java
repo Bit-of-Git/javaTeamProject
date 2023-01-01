@@ -31,10 +31,6 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -109,9 +105,7 @@ public class BookingController implements Initializable{
 				
 				while(rs2.next()) {
 					cflightU.add(new String(rs2.getObject(13).toString()));
-					System.out.println(flights);
-					System.out.println(cflightU);
-					System.out.println(rs2.getObject(6).toString());
+					
  					if(cflightU.contains(customerUser)) {
 						finalFlights.add(new Flight(rs2.getObject(6).toString(), rs2.getObject(7).toString(), rs2.getObject(4).toString(), rs2.getObject(5).toString(), 
 								rs2.getObject(3).toString(), rs2.getInt(1), rs2.getInt(2), 
@@ -193,11 +187,24 @@ public class BookingController implements Initializable{
 	        
 	        //this gives us the rows that were selected
 	        selectedRows = tableView.getSelectionModel().getSelectedItems();
-	        
+	        int x = 0;
 	        //loop over the selected rows and remove the Person objects from the table
 	        for (Flight flight: selectedRows)
 	        {
 	        	allFlights.remove(flight);
+	        	x = flight.getFlightID();
+	        }
+	        try {
+	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+			 
+			Connection con = DriverManager.getConnection(conURL); 
+				 //code 
+			
+	        PreparedStatement stmt = con.prepareStatement("delete from booking where (FlightID =" + x + ") AND (username = '" + customerUser + "')");
+	        stmt.executeUpdate();
+	        }catch(Exception e) {
+	        	System.out.println();
 	        }
 	    }
 	
