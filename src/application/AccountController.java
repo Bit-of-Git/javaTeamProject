@@ -597,7 +597,6 @@ public class AccountController implements Initializable{
 				capacityVar = 0;
 				costVar = 0;
 				
-		       
 		        try{
 		        	flightIDVar = Integer.parseInt(flightIDText.getText());
 		        }
@@ -632,6 +631,29 @@ public class AccountController implements Initializable{
 				leavingTimeVar = departureText.getText();
 				arriveTimeVar =  arrivalText.getText();
 				dayVar = dayText.getText();
+				
+				try {
+					Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+					String conURL = "jdbc:sqlserver://idiashroud.database.windows.net:1433;database=Project;user=pleasework@idiashroud;password=GSUCIS3270!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+
+					Connection con = DriverManager.getConnection(conURL); 
+							 //code 
+				    PreparedStatement stmt = con.prepareStatement("Insert INTO flightinfo VALUES (?,?,?,?,?,?,?,?,?,?)");
+				    stmt.setInt(1, flightIDVar);
+				    stmt.setInt(2, flightNumVar);
+				    stmt.setString(3, dayVar);
+				    stmt.setString(4, toVar);
+				    stmt.setString(5, fromVar);
+				    stmt.setString(6, leavingTimeVar);
+				    stmt.setString(7, arriveTimeVar);
+				    stmt.setInt(9, capacityVar);
+				    stmt.setDouble(10, costVar);
+				    stmt.setInt(8, 200);
+				    stmt.executeUpdate();
+					}catch(Exception e) {
+						
+					}
+			       
 				
 				
 		        if(leavingTimeVar !="" && arriveTimeVar !="" && toVar !="" && fromVar !="" && dayVar !="" && flightIDVar !=0 && flightNumVar !=0 && capacityVar !=0 && costVar!=0) {
